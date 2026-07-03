@@ -1,0 +1,135 @@
+// Bulletin — local classifieds marketplace schema
+// learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Region {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  state     String
+  // approximate center for the map view
+  lat       Float
+  lng       Float
+  // rough bounding radius in km
+  radiusKm  Float    @default(25)
+  createdAt DateTime @default(now())
+  listings  Listing[]
+}
+
+model Category {
+  id          String     @id @default(cuid())
+  name        String
+  slug        String     @unique
+  // optional parent for subcategories
+  parentId    String?
+  parent      Category?  @relation("CategoryTree", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryTree")
+  // ordering weight
+  sortOrder   Int        @default(0)
+  // lucide icon name
+  icon        String?
+  createdAt   DateTime   @default(now())
+  listings    Listing[]
+}
+
+model Listing {
+  id          String     @id @default(cuid())
+  title       String
+  description String
+  price       Int?       // in cents; null = "free" or n/a
+  priceLabel  String?    // override e.g. "obo", "trade"
+  currency    String     @default("USD")
+  // location
+  locationName String
+  lat         Float?
+  lng         Float?
+  // ownership: either a user or an anonymous email
+  userId      String?
+  user        User?      @relation(fields: [userId], references: [id])
+  contactEmail String
+  contactName String?
+  contactPhone String?
+  showPhone   Boolean    @default(false)
+  // relations
+  regionId    String
+  region      Region     @relation(fields: [regionId], references: [id])
+  categoryId  String
+  category    Category   @relation(fields: [categoryId], references: [id])
+  images      Image[]
+  messages    Message[]
+  flags       Flag[]
+  // lifecycle
+  status      Status     @default(ACTIVE)
+  expiresAt   DateTime
+  renewedAt   DateTime   @default(now())
+  viewCount   Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Image {
+  id         String   @id @default(cuid())
+  listingId  String
+  listing    Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  url        String
+  // order within the gallery
+  position   Int      @default(0)
+  width      Int?
+  height     Int?
+  createdAt  DateTime @default(now())
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String?
+  createdAt DateTime  @default(now())
+  listings  Listing[]
+}
+
+model Message {
+  id         String   @id @default(cuid())
+  listingId  String
+  listing    Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  fromEmail  String
+  fromName   String?
+  body       String
+  // anonymized relay: store a token so seller can reply without revealing email
+  read       Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
+
+model Flag {
+  id         String     @id @default(cuid())
+  listingId  String
+  listing    Listing    @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  reason     FlagReason
+  ipHash     String?
+  createdAt  DateTime   @default(now())
+
+  @@index([listingId])
+}
+
+enum Status {
+  ACTIVE
+  EXPIRED
+  REMOVED
+  DRAFT
+}
+
+enum FlagReason {
+  PROHIBITED
+  MISCATEGORIZED
+  SPAM
+  SCAM
+  DUPLICATE
+  OTHER
+}
