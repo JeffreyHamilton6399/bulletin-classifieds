@@ -50,3 +50,31 @@ Stage Summary:
 - Design: oxblood/ink/paper palette, Inter Tight + JetBrains Mono + Instrument Serif, sharp 4px radius, paper grain, hairline dividers — distinctly editorial, not templated
 - 17 seeded listings across 8 regions / 7 categories with 12 AI-generated item photos
 - All required features working: regions, categories+subs, post (up to 12 images, 30-day expiry), browse/search with price/keyword/has-image filters, map view, fluid image gallery, anonymous relay messaging, flag-for-removal, rate limiting, email validation, responsive + dark mode
+
+---
+Task ID: 3
+Agent: main (orchestrator)
+Task: Production polish + GitHub/Vercel deployment
+
+Work Log:
+- Added Sonner toasts across all actions (post, message, flag, renew, copy-link, upload) with editorial-styled toaster
+- Built "My Listings" management view + /api/my-listings: enter your email → see all your posts with renew/remove buttons. This is the no-account answer: your email IS the key, no password needed.
+- Added "How it works" 3-card info panel on the post form: No account / Anonymous relay / Manage anytime — makes the anonymous posting model obvious
+- Added /api/stats + home stats strip (active / posted today / categories / with photos) with tabular-nums
+- Added "Your listings" (UserRound icon) link in header + footer
+- Production/Vercel prep:
+  - postinstall: prisma generate (auto-runs on Vercel install)
+  - src/lib/ensure-seeded.ts: copies shipped db/custom.db → /tmp on serverless cold start (Vercel filesystem is read-only except /tmp)
+  - src/lib/db.ts: Vercel-aware DATABASE_URL resolution (file:/tmp/bulletin.db on Vercel)
+  - Refactored seed.ts to export reusable runSeed()
+  - README with full deploy instructions + Postgres swap guidance for true persistence
+  - Richer OpenGraph metadata + metadataBase
+- Browser-verified: My Listings flow (email → listings → renew toast), home stats render, post form info cards render, all prior flows intact
+- Lint clean, no runtime errors
+- Git: created GitHub repo via API, pushed all commits (3 total). Repo: github.com/JeffreyHamilton6399/bulletin-classifieds
+- Cleaned PAT from remote URL (replaced with plain HTTPS URL)
+
+Stage Summary:
+- App is production-polished: toasts everywhere, clear no-account UX, listing management, stats
+- Shipped to GitHub, ready for Vercel import (no env vars needed for SQLite demo; set DATABASE_URL only if switching to Postgres)
+- Known limitation documented: SQLite data resets per serverless cold-start; README explains the one-line Postgres swap for permanent persistence
