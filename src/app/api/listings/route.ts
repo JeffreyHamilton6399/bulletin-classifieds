@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { Prisma } from '@prisma/client'
+import { ensureBooted } from '@/lib/ensure-seeded'
 
 export const dynamic = 'force-dynamic'
 
 export async function GET(req: NextRequest) {
+  await ensureBooted()
   const { searchParams } = new URL(req.url)
   const regionId = searchParams.get('regionId')
   const category = searchParams.get('category') // slug

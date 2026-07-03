@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { Prisma } from '@prisma/client'
+import { ensureBooted } from '@/lib/ensure-seeded'
 
 export const dynamic = 'force-dynamic'
 
 const EXPIRY_DAYS = 30
 
 export async function POST(req: NextRequest) {
+  await ensureBooted()
   let body: any
   try {
     body = await req.json()

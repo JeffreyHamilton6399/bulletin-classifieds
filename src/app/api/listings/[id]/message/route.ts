@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
+import { ensureBooted } from '@/lib/ensure-seeded'
 
 export const dynamic = 'force-dynamic'
 
@@ -7,6 +8,7 @@ export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  await ensureBooted()
   const { id } = await params
   let body: any
   try {

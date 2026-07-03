@@ -2,8 +2,6 @@ import { PrismaClient } from '@prisma/client'
 import { existsSync, readdirSync } from 'fs'
 import path from 'path'
 
-const prisma = new PrismaClient()
-
 const REGIONS = [
   { name: 'San Francisco', slug: 'sfbay', state: 'CA', lat: 37.7749, lng: -122.4194, radiusKm: 20 },
   { name: 'New York City', slug: 'nyc', state: 'NY', lat: 40.7128, lng: -74.006, radiusKm: 25 },
@@ -99,7 +97,7 @@ function jitter(base: number, amt: number) {
   return base + (Math.random() - 0.5) * amt
 }
 
-async function main() {
+async function main(prisma: PrismaClient) {
   console.log('Seeding regions...')
   for (let i = 0; i < REGIONS.length; i++) {
     const r = REGIONS[i]
@@ -319,11 +317,28 @@ async function main() {
   console.log(`Done. ${count} listings in DB.`)
 }
 
-main()
-  .catch((e) => {
-    console.error(e)
-    process.exit(1)
-  })
-  .finally(async () => {
-    await prisma.$disconnect()
-  })
+/** Reusable seed runner — used by the CLI script and the serverless boot path. */
+export async function runSeed(prisma: PrismaClient) {
+  return main(prisma)
+}
+
+// When run directly as a script
+const isDirect = (() => {
+  try {
+    return process.argv[1] && path.resolve(process.argv[1]) === path.resolve(__filename)
+  } catch {
+    return false
+  }
+})()
+
+if (isDirect) {
+  const prisma = new PrismaClient()
+  runSeed(prisma)
+    .catch((e) => {
+      console.error(e)
+      process.exit(1)
+    })
+    .finally(async () => {
+      await prisma.$disconnect()
+    })
+}

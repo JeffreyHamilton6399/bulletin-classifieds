@@ -3,6 +3,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { toast } from 'sonner'
 import {
   ArrowLeft, Flag, Eye, MapPin, Send, ShieldCheck, Copy, Check,
 } from 'lucide-react'
@@ -68,6 +69,7 @@ export function ListingDetail({ id }: { id: string }) {
   const copyLink = () => {
     navigator.clipboard.writeText(window.location.href)
     setCopied(true)
+    toast.success('Link copied to clipboard')
     setTimeout(() => setCopied(false), 1500)
   }
 
@@ -229,8 +231,9 @@ function FlagPanel({ id, onClose }: { id: string; onClose: () => void }) {
     try {
       await api.flag(id, reason)
       setDone(true)
+      toast.success('Flag submitted — thank you')
     } catch {
-      setDone(true)
+      toast.error('Could not submit flag')
     } finally {
       setLoading(false)
     }
@@ -295,8 +298,10 @@ function ContactPanel({ listing, onClose }: { listing: ListingT; onClose: () => 
     try {
       await api.message(listing.id, { fromEmail: email, fromName: name, body })
       setSent(true)
+      toast.success('Message sent to the poster')
     } catch (e: any) {
       setError(e.message || 'Something went wrong.')
+      toast.error(e.message || 'Could not send message')
     } finally {
       setLoading(false)
     }

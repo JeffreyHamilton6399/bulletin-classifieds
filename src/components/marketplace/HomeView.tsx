@@ -26,6 +26,11 @@ export function HomeView() {
     queryFn: () => api.listings({ regionId: regionId!, limit: '24' }),
     enabled: !!regionId,
   })
+  const { data: stats } = useQuery({
+    queryKey: ['stats', regionId],
+    queryFn: () => api.stats(regionId!),
+    enabled: !!regionId,
+  })
 
   // --- Region picker (no region) ---
   if (!regionId) {
@@ -116,6 +121,25 @@ export function HomeView() {
               Post a listing →
             </button>
           </div>
+        </div>
+
+        {/* Stats strip */}
+        <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-1 font-mono text-xs text-muted-foreground">
+          <span>
+            <span className="text-foreground font-medium tnum">{stats?.total ?? '—'}</span> active
+          </span>
+          <span className="opacity-30">/</span>
+          <span>
+            <span className="text-foreground font-medium tnum">{stats?.today ?? '—'}</span> posted today
+          </span>
+          <span className="opacity-30">/</span>
+          <span>
+            <span className="text-foreground font-medium tnum">{stats?.categories ?? '—'}</span> categories
+          </span>
+          <span className="opacity-30 hidden sm:inline">/</span>
+          <span className="hidden sm:inline">
+            <span className="text-foreground font-medium tnum">{stats?.withImages ?? '—'}</span> with photos
+          </span>
         </div>
       </motion.div>
 

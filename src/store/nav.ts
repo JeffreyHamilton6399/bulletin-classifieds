@@ -7,19 +7,18 @@ export type View =
   | { name: 'browse'; category?: string; q?: string }
   | { name: 'listing'; id: string }
   | { name: 'post' }
-  | { name: 'account' }
+  | { name: 'account'; email?: string }
 
 interface NavState {
   view: View
   regionId: string | null
-  // history stack for back navigation
   history: View[]
   go: (view: View) => void
   back: () => void
   setRegion: (id: string) => void
 }
 
-export const useNav = create<NavState>((set, get) => ({
+export const useNav = create<NavState>((set) => ({
   view: { name: 'home' },
   regionId: null,
   history: [],
@@ -38,7 +37,7 @@ export const useNav = create<NavState>((set, get) => ({
   setRegion: (id) => set({ regionId: id, view: { name: 'home' }, history: [] }),
 }))
 
-// Persist region to localStorage
+// Persist region to localStorage + restore
 if (typeof window !== 'undefined') {
   const saved = localStorage.getItem('bulletin:region')
   if (saved) {

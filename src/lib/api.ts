@@ -53,4 +53,10 @@ export const api = {
     if (!res.ok) throw new Error((data as any).error || 'upload failed')
     return (data as { urls: string[] }).urls
   },
+  myListings: (email: string) =>
+    jget<any[]>(`/api/my-listings?email=${encodeURIComponent(email)}`),
+  stats: (regionId?: string) =>
+    jget<{ total: number; withImages: number; categories: number; today: number }>(
+      `/api/stats${regionId ? `?regionId=${regionId}` : ''}`,
+    ),
 }

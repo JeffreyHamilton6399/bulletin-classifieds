@@ -3,7 +3,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { useState, useRef, useCallback } from 'react'
 import { motion, AnimatePresence, Reorder } from 'framer-motion'
-import { ArrowLeft, X, Upload, ImagePlus, Loader2, Check } from 'lucide-react'
+import { toast } from 'sonner'
+import { ArrowLeft, X, Upload, ImagePlus, Loader2, Check, Info, ShieldCheck } from 'lucide-react'
 import { api } from '@/lib/api'
 import { useNav } from '@/store/nav'
 import { cn } from '@/lib/utils'
@@ -41,16 +42,19 @@ export function PostListing() {
 
   const handleFiles = useCallback(async (files: FileList | null) => {
     if (!files || !files.length) return
-    if (images.length >= 12) return setError('Maximum 12 images.')
-    setError('')
+    if (images.length >= 12) {
+      toast.error('Maximum 12 images')
+      return
+    }
     setUploading(true)
     try {
       const remaining = 12 - images.length
       const slice = Array.from(files).slice(0, remaining)
       const urls = await api.upload(slice)
       setImages((prev) => [...prev, ...urls])
+      toast.success(`Uploaded ${urls.length} image${urls.length > 1 ? 's' : ''}`)
     } catch (e: any) {
-      setError(e.message || 'Upload failed.')
+      toast.error(e.message || 'Upload failed')
     } finally {
       setUploading(false)
       if (fileRef.current) fileRef.current.value = ''
@@ -75,9 +79,11 @@ export function PostListing() {
         contactEmail, contactName, contactPhone, showPhone,
         images,
       })
+      toast.success('Listing published')
       go({ name: 'listing', id: created.id })
     } catch (e: any) {
       setError(e.message || 'Failed to post.')
+      toast.error(e.message || 'Failed to post')
     } finally {
       setSubmitting(false)
     }
@@ -102,6 +108,42 @@ export function PostListing() {
         <p className="text-sm text-muted-foreground mt-1">
           in <span className="text-foreground">{region?.name}, {region?.state}</span> · listings auto-expire after 30 days
         </p>
+      </motion.div>
+
+      {/* How it works — no account needed */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.1, duration: 0.3 }}
+        className="mt-5 grid sm:grid-cols-3 gap-px bg-border border hairline rounded-sm overflow-hidden"
+      >
+        <div className="bg-background p-3.5">
+          <div className="flex items-center gap-1.5 text-oxblood">
+            <ShieldCheck className="size-3.5" />
+            <span className="font-mono text-[10px] uppercase tracking-wider">No account</span>
+          </div>
+          <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
+            Post with just an email. No signup, no password — ever.
+          </p>
+        </div>
+        <div className="bg-background p-3.5">
+          <div className="flex items-center gap-1.5 text-oxblood">
+            <Info className="size-3.5" />
+            <span className="font-mono text-[10px] uppercase tracking-wider">Anonymous relay</span>
+          </div>
+          <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
+            Buyers email you through a relay. Your address stays private.
+          </p>
+        </div>
+        <div className="bg-background p-3.5">
+          <div className="flex items-center gap-1.5 text-oxblood">
+            <Check className="size-3.5" />
+            <span className="font-mono text-[10px] uppercase tracking-wider">Manage anytime</span>
+          </div>
+          <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
+            Use your email to renew, edit, or remove listings later.
+          </p>
+        </div>
       </motion.div>
 
       <div className="mt-6 space-y-5">
