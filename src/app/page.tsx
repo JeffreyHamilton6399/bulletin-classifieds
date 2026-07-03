@@ -36,7 +36,7 @@ export default function Home() {
             )}
             {view.name === 'listing' && <ListingDetail id={view.id} />}
             {view.name === 'post' && <PostListing />}
-            {view.name === 'account' && <MyListings initialEmail={view.email} />}
+            {view.name === 'account' && <MyListings />}
           </motion.div>
         </AnimatePresence>
       </main>
@@ -52,6 +52,6 @@ function viewKey(view: ReturnType<typeof useNav>['view']): string {
     case 'browse': return `browse-${view.category || ''}-${view.q || ''}`
     case 'listing': return `listing-${view.id}`
     case 'post': return 'post'
-    case 'account': return `account-${view.email || ''}`
+    case 'account': return 'account'
   }
 }

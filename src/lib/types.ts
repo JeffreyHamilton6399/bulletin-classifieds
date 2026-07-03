@@ -51,6 +51,7 @@ export interface ListingT {
   contactName: string | null
   contactPhone: string | null
   showPhone: boolean
+  editToken?: string // only present on the create response + my-listings
   status: Status
   expiresAt: string
   renewedAt: string

@@ -58,6 +58,9 @@ model Listing {
   contactName String?
   contactPhone String?
   showPhone   Boolean    @default(false)
+  // secret management token — acts as a per-listing "key" so the poster
+  // (and only the poster) can renew/delete without an account or password.
+  editToken   String     @unique @default(cuid())
   // relations
   regionId    String
   region      Region     @relation(fields: [regionId], references: [id])

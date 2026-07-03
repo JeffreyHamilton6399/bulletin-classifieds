@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 import { ArrowLeft, X, Upload, ImagePlus, Loader2, Check, Info, ShieldCheck } from 'lucide-react'
 import { api } from '@/lib/api'
 import { useNav } from '@/store/nav'
+import { storeListingToken } from '@/lib/tokens'
 import { cn } from '@/lib/utils'
 
 const PRICE_LABELS = [
@@ -79,7 +80,14 @@ export function PostListing() {
         contactEmail, contactName, contactPhone, showPhone,
         images,
       })
-      toast.success('Listing published')
+      // Save the management token to this browser so "Your listings" can find it.
+      storeListingToken({
+        id: created.id,
+        token: created.editToken,
+        title: created.title,
+        postedAt: created.createdAt,
+      })
+      toast.success('Listing published — saved to Your listings on this device')
       go({ name: 'listing', id: created.id })
     } catch (e: any) {
       setError(e.message || 'Failed to post.')
@@ -138,10 +146,10 @@ export function PostListing() {
         <div className="bg-background p-3.5">
           <div className="flex items-center gap-1.5 text-oxblood">
             <Check className="size-3.5" />
-            <span className="font-mono text-[10px] uppercase tracking-wider">Manage anytime</span>
+            <span className="font-mono text-[10px] uppercase tracking-wider">Token-protected</span>
           </div>
           <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
-            Use your email to renew, edit, or remove listings later.
+            A secret key is saved to this device so only you can renew or remove.
           </p>
         </div>
       </motion.div>

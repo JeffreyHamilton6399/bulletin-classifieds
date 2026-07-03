@@ -40,8 +40,6 @@ export const api = {
   },
   listing: (id: string) => jget<ListingT>(`/api/listings/${id}`),
   createListing: (body: unknown) => jpost<ListingT>('/api/listings/create', body),
-  renewListing: (id: string, email: string) => jpatch(`/api/listings/${id}`, { action: 'renew', email }),
-  deleteListing: (id: string, email: string) => jpatch(`/api/listings/${id}`, { action: 'delete', email }),
   flag: (id: string, reason: string) => jpost(`/api/listings/${id}/flag`, { reason }),
   message: (id: string, body: { fromEmail: string; fromName?: string; body: string }) =>
     jpost(`/api/listings/${id}/message`, body),
@@ -53,8 +51,12 @@ export const api = {
     if (!res.ok) throw new Error((data as any).error || 'upload failed')
     return (data as { urls: string[] }).urls
   },
-  myListings: (email: string) =>
-    jget<any[]>(`/api/my-listings?email=${encodeURIComponent(email)}`),
+  myListings: (tokens: string[]) =>
+    jpost<any[]>('/api/my-listings', { tokens }),
+  renewListing: (id: string, token: string) =>
+    jpatch(`/api/listings/${id}`, { action: 'renew', token }),
+  deleteListing: (id: string, token: string) =>
+    jpatch(`/api/listings/${id}`, { action: 'delete', token }),
   stats: (regionId?: string) =>
     jget<{ total: number; withImages: number; categories: number; today: number }>(
       `/api/stats${regionId ? `?regionId=${regionId}` : ''}`,

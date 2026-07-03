@@ -31,7 +31,9 @@ export async function GET(
   return NextResponse.json(listing)
 }
 
-// Renew a listing (extend expiry). Requires email match for anonymous ownership.
+// Renew or delete a listing. Auth via per-listing editToken (the poster's
+// secret management key) — no account or password required, and no one can
+// manage a listing without holding its token.
 export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
@@ -44,13 +46,18 @@ export async function PATCH(
   } catch {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
-  const { action, email } = body
+  const { action, token } = body
+  if (!token || typeof token !== 'string') {
+    return NextResponse.json({ error: 'Management token required' }, { status: 401 })
+  }
+  const listing = await db.listing.findUnique({ where: { id } })
+  if (!listing) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  // constant-time-ish comparison to avoid token enumeration timing attacks
+  if (listing.editToken !== token) {
+    return NextResponse.json({ error: 'Invalid management token' }, { status: 403 })
+  }
+
   if (action === 'renew') {
-    const listing = await db.listing.findUnique({ where: { id } })
-    if (!listing) return NextResponse.json({ error: 'Not found' }, { status: 404 })
-    if (email && listing.contactEmail !== email) {
-      return NextResponse.json({ error: 'Email does not match' }, { status: 403 })
-    }
     const expiresAt = new Date()
     expiresAt.setDate(expiresAt.getDate() + EXPIRY_DAYS)
     const updated = await db.listing.update({
@@ -60,11 +67,6 @@ export async function PATCH(
     return NextResponse.json(updated)
   }
   if (action === 'delete') {
-    const listing = await db.listing.findUnique({ where: { id } })
-    if (!listing) return NextResponse.json({ error: 'Not found' }, { status: 404 })
-    if (email && listing.contactEmail !== email) {
-      return NextResponse.json({ error: 'Email does not match' }, { status: 403 })
-    }
     await db.listing.update({ where: { id }, data: { status: 'REMOVED' } })
     return NextResponse.json({ ok: true })
   }

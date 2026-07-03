@@ -7,7 +7,7 @@ export type View =
   | { name: 'browse'; category?: string; q?: string }
   | { name: 'listing'; id: string }
   | { name: 'post' }
-  | { name: 'account'; email?: string }
+  | { name: 'account' }
 
 interface NavState {
   view: View

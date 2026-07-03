@@ -44,13 +44,13 @@ export function Header() {
           <div className="relative shrink-0">
             <button
               onClick={() => setRegionOpen((o) => !o)}
-              className="flex items-center gap-1.5 text-sm font-medium hover:text-oxblood transition-colors"
+              className="flex items-center gap-1.5 text-sm font-medium hover:text-oxblood transition-colors max-w-[40vw] sm:max-w-none"
             >
-              <MapPin className="size-3.5 text-oxblood" />
-              <span className="hidden xs:inline max-w-[120px] truncate">
+              <MapPin className="size-3.5 text-oxblood shrink-0" />
+              <span className="truncate">
                 {current ? current.name : 'Select region'}
               </span>
-              <ChevronDown className={cn('size-3.5 text-muted-foreground transition-transform', regionOpen && 'rotate-180')} />
+              <ChevronDown className={cn('size-3.5 text-muted-foreground transition-transform shrink-0', regionOpen && 'rotate-180')} />
             </button>
             <AnimatePresence>
               {regionOpen && (

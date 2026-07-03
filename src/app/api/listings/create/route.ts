@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { Prisma } from '@prisma/client'
 import { ensureBooted } from '@/lib/ensure-seeded'
+import crypto from 'crypto'
 
 export const dynamic = 'force-dynamic'
 
@@ -76,6 +77,10 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    // Generate a strong, unique management token. This acts as the listing's
+    // "key" — whoever holds it can renew/delete. Stored in the poster's
+    // browser so only they (or anyone they share the link with) can manage.
+    const editToken = crypto.randomBytes(18).toString('base64url')
     const listing = await db.listing.create({
       data: {
         title: title.trim(),
@@ -91,6 +96,7 @@ export async function POST(req: NextRequest) {
         contactName: contactName?.trim() || null,
         contactPhone: contactPhone?.trim() || null,
         showPhone: !!showPhone,
+        editToken,
         expiresAt,
         images:
           imgList.length > 0
