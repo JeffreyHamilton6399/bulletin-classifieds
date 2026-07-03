@@ -78,3 +78,28 @@ Stage Summary:
 - App is production-polished: toasts everywhere, clear no-account UX, listing management, stats
 - Shipped to GitHub, ready for Vercel import (no env vars needed for SQLite demo; set DATABASE_URL only if switching to Postgres)
 - Known limitation documented: SQLite data resets per serverless cold-start; README explains the one-line Postgres swap for permanent persistence
+
+---
+Task ID: 4
+Agent: main (orchestrator)
+Task: Fix region selector bug + secure listing management (no-password security)
+
+Work Log:
+- Bug: region selector name used `hidden xs:inline` but `xs` is not a default Tailwind breakpoint → region name was ALWAYS invisible, so users couldn't see/change their region. Fixed to always-visible with mobile truncation.
+- Security gap closed: replaced email-based listing access with per-listing edit tokens.
+  - Added `editToken String @unique` to Listing schema (crypto.randomBytes(18) base64url)
+  - Create route generates + returns the token; re-seeded all 17 listings with tokens
+  - PATCH (renew/delete) now authorizes by token, not email → 401 missing / 403 invalid
+  - /api/my-listings is now POST {tokens:[]} — no email enumeration possible
+  - New lib/tokens.ts: localStorage token manager (store on post, add-by-link, forget-on-device, parse manage URLs)
+  - PostListing saves token to browser after publishing; toast confirms "saved to Your listings on this device"
+  - Rebuilt MyListings view: reads stored tokens, renew/remove/copy-link/forget buttons, "Why no password?" security note, add-by-link input for cross-device access
+  - "How it works" card updated: "Token-protected" replaces "Manage anytime"
+- Verified end-to-end in browser: region now visible, post → token saved → Your listings shows it → renew works (toast) → wrong token returns 403, missing token returns 401
+- Lint clean; committed (5e69c12) and pushed to GitHub
+
+Stage Summary:
+- Region selector is now visible and usable on all screen sizes
+- Listings are secure WITHOUT passwords: each gets a secret management token saved to the poster's browser. Only the device that posted (or anyone given the management link) can renew/remove. Knowing the poster's email grants nothing.
+- This is the Craigslist-style "manage link" model — no account, no password, no email infrastructure, yet secure.
+- Pushed to github.com/JeffreyHamilton6399/bulletin-classifieds (commit 5e69c12)
