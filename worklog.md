@@ -167,3 +167,29 @@ Stage Summary:
 - All reported mobile UI bugs fixed.
 - Custom icon shipped.
 - Pushed to github.com/JeffreyHamilton6399/bulletin-classifieds (commit 5a4fe40)
+
+---
+Task ID: 7
+Agent: main (orchestrator)
+Task: Fix auth modal still stuck at top + sweep other overlays
+
+Work Log:
+- Root cause found via runtime inspection: the outer motion.div overlay had
+  bounding height 56px (header height) instead of viewport height. Framer
+  Motion applies a transform during animation, which creates a new containing
+  block and breaks `position: fixed` — the overlay behaved like absolute
+  positioning relative to a transformed ancestor, shrinking to the header.
+- Fix: the fixed overlay layer is now a plain <div> (no Framer transform).
+  Only the inner modal card uses motion.div for its scale/translate animation.
+  Centering wrapper uses min-h-[100dvh] (unambiguous) instead of min-h-full.
+- Applied the identical fix to the image gallery lightbox (same bug).
+- Verified via VLM: modal now vertically centered, backdrop covers full
+  screen, Name field visible without scrolling. Browse + Your listings pages
+  also clean on mobile.
+- Lint clean; committed (d0073dd) and pushed.
+
+Stage Summary:
+- The "stuck at top" bug is genuinely fixed this time — previous attempt only
+  changed flex/centering classes which couldn't work while the overlay itself
+  was 56px tall due to the Framer transform breaking fixed positioning.
+- Pushed to github.com/JeffreyHamilton6399/bulletin-classifieds (d0073dd)
