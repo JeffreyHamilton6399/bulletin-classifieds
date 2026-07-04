@@ -37,7 +37,10 @@ export const metadata: Metadata = {
     "for sale", "housing", "jobs", "services", "community",
   ],
   authors: [{ name: "Bulletin" }],
-  icons: { icon: "/logo.svg" },
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }, { url: "/apple-icon.png", type: "image/png" }],
+    apple: "/apple-icon.png",
+  },
   openGraph: {
     title: "Bulletin — local classifieds",
     description:

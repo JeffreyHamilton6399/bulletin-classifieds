@@ -53,7 +53,7 @@ export function AuthModal({ open, onClose }: { open: boolean; onClose: () => voi
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] bg-foreground/30 backdrop-blur-sm grid place-items-center p-4"
+          className="fixed inset-0 z-[100] bg-foreground/30 backdrop-blur-sm grid place-items-start sm:place-items-center p-4 overflow-y-auto"
           onClick={onClose}
         >
           <motion.div
@@ -61,7 +61,7 @@ export function AuthModal({ open, onClose }: { open: boolean; onClose: () => voi
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 8 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full max-w-sm bg-popover border hairline rounded-md shadow-xl overflow-hidden"
+            className="w-full max-w-sm bg-popover border hairline rounded-md shadow-xl overflow-hidden my-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b hairline">

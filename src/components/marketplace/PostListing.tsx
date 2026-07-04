@@ -246,7 +246,7 @@ export function PostListing() {
             type="file"
             accept="image/*"
             multiple
-            className="hidden"
+            className="sr-only"
             onChange={(e) => handleFiles(e.target.files)}
           />
           {images.length > 0 ? (
