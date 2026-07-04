@@ -103,3 +103,32 @@ Stage Summary:
 - Listings are secure WITHOUT passwords: each gets a secret management token saved to the poster's browser. Only the device that posted (or anyone given the management link) can renew/remove. Knowing the poster's email grants nothing.
 - This is the Craigslist-style "manage link" model — no account, no password, no email infrastructure, yet secure.
 - Pushed to github.com/JeffreyHamilton6399/bulletin-classifieds (commit 5e69c12)
+
+---
+Task ID: 5
+Agent: main (orchestrator)
+Task: Add optional accounts with profiles (NextAuth + scrypt)
+
+Work Log:
+- Added User fields: passwordHash, bio, avatarColor (random from 6-color palette)
+- Built NextAuth v4 Credentials provider with JWT sessions (serverless-friendly):
+  - src/lib/auth.ts: scrypt password hashing (Node crypto, no deps), authorize callback, jwt/session callbacks exposing user.id
+  - src/app/api/auth/[...nextauth]/route.ts: route handler
+  - src/app/api/auth/signup/route.ts: signup with validation + rate limit + auto-login
+- API: /api/me (GET own profile+listings, PATCH bio/name), /api/profile/[id] (public profile + active listings)
+- Listings posted while signed in now link to userId
+- Worked around a Turbopack/NextAuth v4 interop bug where SessionProvider resolved to undefined — created src/lib/next-auth-client.ts thin wrapper using default import. All client auth imports go through it.
+- UI:
+  - AuthModal: login/signup tabs, validation, toasts, auto-login after signup
+  - AuthButton: "Sign in" when logged out → colored letter avatar + dropdown (Your profile / Your listings / Sign out) when logged in
+  - ProfileView: public profile (avatar, name, bio, member-since, listings grid); own profile has Edit (name + bio, 500-char limit)
+  - SessionProvider added to Providers tree
+- Security: .env was tracked and leaked NEXTAUTH_SECRET → untracked it, added .env.example. README documents required Vercel env vars (NEXTAUTH_SECRET, NEXTAUTH_URL).
+- Browser-verified full flow: signup (Jamie Test) → auto-login → post listing while signed in → profile shows it → edit bio → "Profile updated" toast
+- Lint clean; committed (a81439b) and pushed to GitHub
+
+Stage Summary:
+- Hybrid model now live: accounts (profiles + cross-device) OR anonymous (per-listing tokens). Both coexist.
+- Accounts use scrypt hashing, JWT sessions, no external email service needed.
+- Known limitation (documented in README): SQLite resets on Vercel cold-start, so accounts/lists don't persist in production without switching to Postgres (one-line schema change + DATABASE_URL env var).
+- Pushed to github.com/JeffreyHamilton6399/bulletin-classifieds (commit a81439b)
