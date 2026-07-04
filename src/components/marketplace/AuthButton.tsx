@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useSession, signOut } from '@/lib/next-auth-client'
 import { motion, AnimatePresence } from 'framer-motion'
 import { toast } from 'sonner'
-import { UserRound, LogOut, LayoutGrid, ChevronDown } from 'lucide-react'
+import { UserRound, LogOut, LayoutGrid, ChevronDown, Settings } from 'lucide-react'
 import { useNav } from '@/store/nav'
 import { AuthModal } from './AuthModal'
 
@@ -108,6 +108,16 @@ export function AuthButton() {
               >
                 <LayoutGrid className="size-3.5" />
                 Your listings
+              </button>
+              <button
+                onClick={() => {
+                  setMenuOpen(false)
+                  go({ name: 'settings' })
+                }}
+                className="flex w-full items-center gap-2 px-3 py-1.5 text-sm hover:bg-accent transition-colors text-left"
+              >
+                <Settings className="size-3.5" />
+                Settings
               </button>
               <div className="h-px bg-border my-1" />
               <button

@@ -9,6 +9,7 @@ export type View =
   | { name: 'post' }
   | { name: 'account' }
   | { name: 'profile'; userId: string }
+  | { name: 'settings' }
 
 interface NavState {
   view: View

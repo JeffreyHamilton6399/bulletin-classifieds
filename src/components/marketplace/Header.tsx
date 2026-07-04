@@ -1,12 +1,11 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown, Search, PenLine, Moon, Sun, MapPin } from 'lucide-react'
+import { ChevronDown, Search, PenLine, MapPin, Settings } from 'lucide-react'
 import { api } from '@/lib/api'
 import { useNav } from '@/store/nav'
-import { useTheme } from 'next-themes'
 import { cn } from '@/lib/utils'
 import { AuthButton } from './AuthButton'
 
@@ -15,10 +14,6 @@ export function Header() {
   const { data: regions } = useQuery({ queryKey: ['regions'], queryFn: api.regions })
   const [regionOpen, setRegionOpen] = useState(false)
   const [q, setQ] = useState('')
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => setMounted(true), [])
 
   const current = regions?.find((r) => r.id === regionId)
 
@@ -110,13 +105,14 @@ export function Header() {
             </div>
           </form>
 
-          {/* Theme toggle */}
+          {/* Settings */}
           <button
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            onClick={() => go({ name: 'settings' })}
             className="shrink-0 size-8 grid place-items-center text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="Toggle theme"
+            aria-label="Settings"
+            title="Settings"
           >
-            {mounted && theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+            <Settings className="size-4" />
           </button>
 
           {/* Account / auth */}
