@@ -132,3 +132,38 @@ Stage Summary:
 - Accounts use scrypt hashing, JWT sessions, no external email service needed.
 - Known limitation (documented in README): SQLite resets on Vercel cold-start, so accounts/lists don't persist in production without switching to Postgres (one-line schema change + DATABASE_URL env var).
 - Pushed to github.com/JeffreyHamilton6399/bulletin-classifieds (commit a81439b)
+
+---
+Task ID: 6
+Agent: main (orchestrator)
+Task: Fix Vercel build blocker + mobile UI bugs + add app icon
+
+Work Log:
+- CRITICAL Vercel build fix: 'Environment variable not found: DATABASE_URL'.
+  Root cause: .env was untracked (contained NEXTAUTH_SECRET) so Vercel had no
+  DATABASE_URL at build time. prisma db push / generate both fail without it.
+  Fix: scripts/ensure-env.js writes a fallback DATABASE_URL=file:/tmp/bulletin-build.db
+  to .env if missing. Wired into postinstall + vercel-build. vercel-build now
+  only runs 'prisma generate && next build' (no db push/seed — runtime ensureBooted
+  copies the shipped DB to /tmp).
+- Mobile signup bug: Name field rendered off-screen (y: -54) because the modal
+  was taller than the viewport and centered with place-items-center, pushing
+  the top above the visible area. Fixed: place-items-start on mobile +
+  overflow-y-auto so the modal scrolls. Verified Name field now at y:174.
+- File upload mobile bug: input used className='hidden' (display:none) which
+  fails to open the file picker on iOS Safari when .click() is called.
+  Changed to 'sr-only' (visible but clipped) — mobile-safe.
+- App icon: created favicon.svg (italic serif 'B' on oxblood) + generated
+  apple-icon.png (1024px) via image-gen. Updated layout metadata icons config.
+- QA: verified home, signup, post form all render correctly on 390px mobile.
+  All fields (Title, Category, Price, Description, Location, Upload, Email,
+  Name, Phone) visible and usable.
+- Lint clean; committed (5a4fe40) and pushed to GitHub.
+
+Stage Summary:
+- Vercel build should now succeed without any env vars configured (fallback
+  DATABASE_URL is auto-created). For accounts to work in production, user
+  still needs to set NEXTAUTH_SECRET + NEXTAUTH_URL in Vercel.
+- All reported mobile UI bugs fixed.
+- Custom icon shipped.
+- Pushed to github.com/JeffreyHamilton6399/bulletin-classifieds (commit 5a4fe40)
