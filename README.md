@@ -8,100 +8,124 @@ A modern, opinionated take on the local classifieds marketplace (think Craigslis
 
 Bulletin is a regional classifieds platform where users browse and post listings scoped by geographic region — for sale, housing, jobs, services, community, gigs, and discussion.
 
-**No account required.** You post with just an email address. Buyers reach sellers through an anonymous email relay. Your email is the key to managing your listings.
+Create an account for a public profile, or post anonymously — both work.
 
 ## Design
 
 - **Type system** — Inter Tight (grotesque) + JetBrains Mono (prices/metadata) + Instrument Serif (display headlines)
-- **Palette** — warm paper-cream background, ink-black text, a single oxblood-red accent. No purple gradients, no templated card grids.
-- **Texture** — subtle paper grain, hairline dividers, sharp 4px corners, flat confidence over glossy shadows
-- **Motion** — Framer Motion throughout: staggered list reveals, springy hovers, drag-to-swipe image gallery, page transitions (150–300ms with `[0.16, 1, 0.3, 1]` easing)
+- **Palette** — warm paper-cream background, ink-black text, a single oxblood-red accent
+- **Texture** — subtle paper grain, hairline dividers, sharp 4px corners
+- **Motion** — Framer Motion: staggered reveals, springy hovers, drag-to-swipe gallery, page transitions
 
 ## Features
 
-- **Optional accounts** — sign up with email + password for a public profile (name, bio, avatar) and listings that follow you across devices. Passwords are hashed with scrypt (Node built-in, no dependencies). Prefer to stay anonymous? You can still post without an account — each listing gets a secret management token saved to your browser.
-- **Regions** — 8 US cities; all listings scoped to your selection, persisted across sessions
-- **Categories & subcategories** — 7 groups with ~5 subs each, hover-mega-menu navigation
-- **Post a listing** — full form with drag-to-reorder image upload (up to 12), price + labels (obo/firm/free/trade), 30-day auto-expiry, email validation, rate limiting
-- **Browse & search** — dense list view with filters (price range, category, keyword, "has image", sort) plus a custom stylized map view (dependency-free, plots listings by lat/lng with hover tooltips)
-- **Listing detail** — fluid swipeable image gallery with lightbox, full description, details panel, anonymous relay messaging, flag-for-removal (auto-removes at 5 flags), copy-link
-- **Your listings** — when signed in, manage everything from any device via your account; when anonymous, manage via per-listing tokens stored on your device
-- **Public profiles** — each user has a profile page (name, bio, avatar, active listings)
-- **Anti-spam** — community flagging, per-email rate limiting (5 posts/hr, 3 messages/hr), IP-deduped flags, signup rate limiting
-- **Responsive + dark mode** — mobile-first, sticky footer, full dark theme
+- **Accounts** — sign up with email + password (scrypt-hashed) for a public profile with listings that follow you across devices
+- **Anonymous posting** — post with just an email if you prefer; each listing gets a management token
+- **Regions** — 8 US cities; listings scoped to your selection
+- **Categories & subcategories** — 7 groups with hover-mega-menu navigation
+- **Post a listing** — drag-to-reorder image upload (up to 12), price labels (obo/firm/free/trade), 30-day auto-expiry with renew
+- **Browse & search** — dense list + custom map view, filters (price, category, keyword, has-image, sort)
+- **Listing detail** — swipeable gallery with lightbox, anonymous relay messaging, flag-for-removal
+- **Profile pages** — name, bio, avatar, listings grid with renew/remove controls
+- **Anti-spam** — community flagging, rate limiting, IP-deduped flags
 
 ## Tech stack
 
 - **Framework** — Next.js 16 (App Router) + TypeScript 5
-- **Styling** — Tailwind CSS 4 + shadcn/ui (New York)
-- **Database** — Prisma ORM (SQLite)
-- **State** — Zustand (client view-router) + TanStack Query (server state)
+- **Database** — Supabase Postgres (persistent, serverless-friendly)
+- **Image storage** — Supabase Storage
+- **Auth** — NextAuth.js v4 (Credentials provider, JWT sessions, scrypt hashing)
+- **Styling** — Tailwind CSS 4 + shadcn/ui
+- **State** — Zustand + TanStack Query
 - **Animation** — Framer Motion
-- **Fonts** — Inter Tight, JetBrains Mono, Instrument Serif (Google Fonts)
 
-## Getting started
+## Setup (5 minutes)
+
+### 1. Install dependencies
 
 ```bash
-# install
 bun install
+```
 
-# set up the database (SQLite) + seed sample data
-bun run db:push
-bun run seed
+### 2. Create a free Supabase project
 
-# start the dev server
+1. Go to [supabase.com](https://supabase.com) → New Project (free tier)
+2. Wait ~2 min for it to provision
+3. Go to **Project Settings → Database** → copy the **Connection string** (URI format)
+4. Go to **Project Settings → API** → copy the **Project URL** and **service_role key**
+5. Go to **Storage** → create a new **public** bucket named `listings`
+
+### 3. Configure environment variables
+
+Copy `.env.example` to `.env` and fill in your Supabase values:
+
+```bash
+cp .env.example .env
+```
+
+```env
+DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@db.YOUR_REF.supabase.co:5432/postgres
+NEXT_PUBLIC_SUPABASE_URL=https://YOUR_REF.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+NEXTAUTH_SECRET=run: openssl rand -hex 32
+NEXTAUTH_URL=http://localhost:3000
+```
+
+### 4. Create the database schema + seed sample data
+
+```bash
+bun run db:setup
+```
+
+This runs `prisma db push` (creates all tables in Postgres) then seeds 8 regions, 7 categories, and ~17 sample listings with images.
+
+### 5. Start the dev server
+
+```bash
 bun run dev
 ```
 
 Open <http://localhost:3000>. Pick a region, then browse or post.
+
+## Deploying to Vercel
+
+1. Push to GitHub
+2. Go to [vercel.com/new](https://vercel.com/new) → import the repo
+3. Add these environment variables in Vercel Project Settings:
+   - `DATABASE_URL` — your Supabase Postgres connection string
+   - `NEXT_PUBLIC_SUPABASE_URL` — your Supabase project URL
+   - `SUPABASE_SERVICE_ROLE_KEY` — your Supabase service role key
+   - `NEXTAUTH_SECRET` — `openssl rand -hex 32`
+   - `NEXTAUTH_URL` — your Vercel deployment URL (e.g. `https://your-app.vercel.app`)
+4. Deploy — the build runs `prisma generate && next build` automatically
+
+**Data persists permanently** across serverless cold starts — accounts, listings, and images all survive.
 
 ## Project structure
 
 ```
 prisma/
   schema.prisma        # Region, Category (tree), Listing, Image, User, Message, Flag
-  seed.ts              # 8 regions, 7 categories, ~17 sample listings
+  seed.ts              # sample data
 src/
   app/
-    api/               # REST routes: regions, categories, listings, my-listings, stats, upload
+    api/               # REST routes + NextAuth
     layout.tsx         # fonts + providers + toaster
-    page.tsx           # SPA shell with AnimatePresence view transitions
-    globals.css        # editorial design tokens (oxblood/ink/paper)
+    page.tsx           # SPA shell with view transitions
+    globals.css        # editorial design tokens
   components/
     marketplace/       # Header, CategoryNav, HomeView, BrowseView, MapView,
-                       # ListingDetail, ImageGallery, PostListing, MyListings, Footer
-    ui/                # shadcn/ui primitives
-    providers.tsx      # ThemeProvider + QueryClient
+                       # ListingDetail, ImageGallery, PostListing, ProfileView,
+                       # AuthModal, AuthButton, SettingsView, Footer
   lib/
     api.ts             # typed fetch helpers
-    db.ts              # Prisma client (Vercel-aware DB path)
-    types.ts           # shared serializable types + formatters
-    ensure-seeded.ts   # serverless boot: copies seeded DB to /tmp on Vercel
+    auth.ts            # NextAuth config + scrypt hashing
+    db.ts              # Prisma client
+    supabase-server.ts # Supabase Storage client
+    types.ts           # shared types + formatters
   store/
-    nav.ts             # Zustand view-router with region persistence
+    nav.ts             # Zustand view-router
 ```
-
-## Deploying to Vercel
-
-This project uses **SQLite** (per its constraints), which is read-only on Vercel's serverless filesystem. To make the demo work in production, the app ships a pre-seeded `db/custom.db` that gets copied to `/tmp` on the first cold start of each serverless instance (`src/lib/ensure-seeded.ts`). Data persists for the life of a warm instance.
-
-**For true production persistence** (listings that survive indefinitely, writes that stick), swap the Prisma datasource to a hosted database — Vercel Postgres, Neon, or Supabase. It's a one-line change in `prisma/schema.prisma`:
-
-```prisma
-datasource db {
-  provider = "postgresql"   // was "sqlite"
-  url      = env("DATABASE_URL")  // set DATABASE_URL in Vercel project settings
-}
-```
-
-Then run `prisma db push` against your new database and re-seed.
-
-### Build setup
-
-- `postinstall` runs `prisma generate` automatically
-- The default Vercel build (`next build`) works out of the box
-- **Required env vars:** `NEXTAUTH_SECRET` (any random 32+ char string) and `NEXTAUTH_URL` (your deployment URL, e.g. `https://your-app.vercel.app`). Set both in Vercel Project Settings → Environment Variables. Generate a secret with `openssl rand -hex 32`.
-- Set `DATABASE_URL` only if you switch to Postgres for permanent persistence
 
 ## License
 
