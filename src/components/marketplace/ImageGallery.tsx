@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence, type PanInfo } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Expand, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -8,6 +9,9 @@ import type { ImageT } from '@/lib/types'
 
 export function ImageGallery({ images }: { images: ImageT[] }) {
   const [index, setIndex] = useState(0)
+  const [mounted, setMounted] = useState(false)
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => setMounted(true), [])
   const [dir, setDir] = useState(0)
   const [expanded, setExpanded] = useState(false)
 
@@ -110,11 +114,12 @@ export function ImageGallery({ images }: { images: ImageT[] }) {
         </div>
       )}
 
-      {/* Expanded lightbox */}
-      <AnimatePresence>
-        {expanded && (
-          <div
-            onClick={() => setExpanded(false)}
+      {/* Expanded lightbox — portaled to body to escape any transformed/sticky ancestor */}
+      {mounted && createPortal(
+        <AnimatePresence>
+          {expanded && (
+            <div
+              onClick={() => setExpanded(false)}
             className="fixed inset-0 z-[100] bg-background/95 backdrop-blur-sm grid place-items-center p-4"
           >
             <button
@@ -150,7 +155,9 @@ export function ImageGallery({ images }: { images: ImageT[] }) {
             )}
           </div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+        document.body,
+      )}
     </div>
   )
 }

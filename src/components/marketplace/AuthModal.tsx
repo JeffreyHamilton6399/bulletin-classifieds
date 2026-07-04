@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { signIn } from '@/lib/next-auth-client'
 import { motion, AnimatePresence } from 'framer-motion'
 import { toast } from 'sonner'
@@ -10,6 +11,8 @@ import { useQueryClient } from '@tanstack/react-query'
 
 export function AuthModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [mode, setMode] = useState<'login' | 'signup'>('signup')
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -46,7 +49,9 @@ export function AuthModal({ open, onClose }: { open: boolean; onClose: () => voi
     }
   }
 
-  return (
+  if (!mounted) return null
+
+  return createPortal(
     <AnimatePresence>
       {open && (
         <div
@@ -158,7 +163,8 @@ export function AuthModal({ open, onClose }: { open: boolean; onClose: () => voi
           </div>
         </div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   )
 }
 
