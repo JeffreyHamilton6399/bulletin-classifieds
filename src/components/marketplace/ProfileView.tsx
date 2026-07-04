@@ -1,13 +1,13 @@
 'use client'
 
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useSession, signOut } from '@/lib/next-auth-client'
 import { motion } from 'framer-motion'
 import { toast } from 'sonner'
 import {
   ArrowLeft, Pencil, Check, Loader2, ImageOff, Mail,
-  RefreshCw, Trash2, Clock, Eye,
+  RefreshCw, Trash2,
 } from 'lucide-react'
 import { api } from '@/lib/api'
 import { useNav } from '@/store/nav'
@@ -22,25 +22,22 @@ const AVATAR_COLORS: Record<string, string> = {
   teal: 'bg-teal-700',
 }
 
-function expiresIn(iso: string): string {
-  const diff = new Date(iso).getTime() - Date.now()
-  const day = 86400000
-  if (diff <= 0) return 'expired'
-  const days = Math.floor(diff / day)
-  if (days < 1) return `${Math.floor(diff / 3600000)}h left`
-  return `${days}d left`
-}
-
 export function ProfileView({ userId }: { userId: string }) {
   const { go } = useNav()
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const qc = useQueryClient()
-  const isOwn = session?.user?.id === userId
+
+  // Wait for session to resolve before deciding isOwn — avoids a query-key
+  // flip mid-render that caused missing listings.
+  const sessionResolved = status !== 'loading'
+  const isOwn = sessionResolved && !!session?.user?.id && session.user.id === userId
 
   const { data, isLoading, error } = useQuery({
     queryKey: isOwn ? ['me'] : ['profile', userId],
     queryFn: () => (isOwn ? api.me() : api.profile(userId)),
+    enabled: sessionResolved || !isOwn,
     retry: false,
+    staleTime: 0,
   })
 
   const [editing, setEditing] = useState(false)
@@ -48,19 +45,28 @@ export function ProfileView({ userId }: { userId: string }) {
   const [name, setName] = useState('')
   const [saving, setSaving] = useState(false)
   const [busy, setBusy] = useState<string | null>(null)
+  const initedFields = useRef(false)
+  const signedOutRef = useRef(false)
 
-  // Auto sign-out on ghost session (401 from /api/me)
-  if (isOwn && error && (error as any).message?.includes('401')) {
-    toast.error('Your session expired — signing you out')
-    signOut({ redirect: false })
-    go({ name: 'home' })
-  }
+  // Handle ghost session (401) in an effect, not during render
+  useEffect(() => {
+    if (isOwn && error && (error as any).message?.includes('401') && !signedOutRef.current) {
+      signedOutRef.current = true
+      toast.error('Your session expired — signing you out')
+      signOut({ redirect: false })
+      go({ name: 'home' })
+    }
+  }, [isOwn, error, go])
 
   const user = data?.user
   // one-shot init of edit fields
-  if (user && !editing && name === '' && user.name) {
-    setTimeout(() => { setName(user.name); setBio(user.bio || '') }, 0)
-  }
+  useEffect(() => {
+    if (user && !editing && !initedFields.current && user.name) {
+      initedFields.current = true
+      setName(user.name)
+      setBio(user.bio || '')
+    }
+  }, [user, editing])
 
   const save = async () => {
     setSaving(true)
@@ -103,7 +109,13 @@ export function ProfileView({ userId }: { userId: string }) {
     }
   }
 
-  if (isLoading) {
+  const startEdit = () => {
+    setBio(user?.bio || '')
+    setName(user?.name || '')
+    setEditing(true)
+  }
+
+  if (isLoading || !sessionResolved) {
     return (
       <div className="mx-auto max-w-4xl px-4 sm:px-6 py-10">
         <div className="animate-pulse space-y-4">
@@ -171,7 +183,9 @@ export function ProfileView({ userId }: { userId: string }) {
           <div className="mt-1 flex items-center gap-3 text-xs font-mono text-muted-foreground">
             <span className="flex items-center gap-1">
               <Mail className="size-3" />
-              {isOwn ? user.email : 'member since ' + new Date(user.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+              {isOwn
+                ? user.email
+                : 'member since ' + new Date(user.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
             </span>
           </div>
           {!editing && user.bio && (
@@ -204,7 +218,7 @@ export function ProfileView({ userId }: { userId: string }) {
               </button>
             ) : (
               <button
-                onClick={() => { setBio(user.bio || ''); setName(user.name || ''); setEditing(true) }}
+                onClick={startEdit}
                 className="h-8 px-3 border hairline rounded-sm text-sm flex items-center gap-1.5 hover:bg-accent transition-colors"
               >
                 <Pencil className="size-3.5" />
