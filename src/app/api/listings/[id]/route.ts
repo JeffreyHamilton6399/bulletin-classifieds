@@ -1,16 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { ensureBooted } from '@/lib/ensure-seeded'
+import { withDbErrorHandler } from '@/lib/api-error'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 const EXPIRY_DAYS = 30
 
-export async function GET(
+export const GET = withDbErrorHandler(async (
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
-) {
+) => {
   await ensureBooted()
   const { id } = await params
   const listing = await db.listing.findUnique({
@@ -29,7 +30,7 @@ export async function GET(
   db.listing.update({ where: { id }, data: { viewCount: { increment: 1 } } }).catch(() => {})
 
   return NextResponse.json(listing)
-}
+})
 
 // Renew or delete a listing. Auth via per-listing editToken (the poster's
 // secret management key) — no account or password required, and no one can

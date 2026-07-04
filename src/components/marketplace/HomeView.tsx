@@ -1,6 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { api } from '@/lib/api'
 import { categoryIcon } from '@/lib/icons'
@@ -34,6 +35,19 @@ export function HomeView() {
 
   // Database setup error — show clear instructions
   const dbError = regionsQuery.error || categoriesQuery.error
+
+  const regions = regionsQuery.data
+  const categories = categoriesQuery.data
+
+  // Clear stale regionId (e.g. from the old SQLite DB) if it doesn't match
+  // any real region in the current database.
+  useEffect(() => {
+    if (regions && regionId && !regions.some((r) => r.id === regionId)) {
+      localStorage.removeItem('bulletin:region')
+      setRegion('')
+    }
+  }, [regions, regionId, setRegion])
+
   if (dbError) {
     return (
       <div className="mx-auto max-w-2xl px-4 sm:px-6 py-12">
@@ -56,9 +70,6 @@ export function HomeView() {
       </div>
     )
   }
-
-  const regions = regionsQuery.data
-  const categories = categoriesQuery.data
 
   // --- Region picker (no region) ---
   if (!regionId) {
