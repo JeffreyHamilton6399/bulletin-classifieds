@@ -49,14 +49,11 @@ export function AuthModal({ open, onClose }: { open: boolean; onClose: () => voi
   return (
     <AnimatePresence>
       {open && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+        <div
           className="fixed inset-0 z-[100] bg-foreground/30 backdrop-blur-sm overflow-y-auto"
           onClick={onClose}
         >
-          <div className="min-h-full flex items-center justify-center p-4 py-8">
+          <div className="min-h-[100dvh] flex items-center justify-center p-4 py-8">
             <motion.div
               initial={{ opacity: 0, scale: 0.96, y: 8 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -159,7 +156,7 @@ export function AuthModal({ open, onClose }: { open: boolean; onClose: () => voi
             </form>
           </motion.div>
           </div>
-        </motion.div>
+        </div>
       )}
     </AnimatePresence>
   )

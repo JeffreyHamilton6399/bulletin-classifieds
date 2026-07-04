@@ -113,10 +113,7 @@ export function ImageGallery({ images }: { images: ImageT[] }) {
       {/* Expanded lightbox */}
       <AnimatePresence>
         {expanded && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <div
             onClick={() => setExpanded(false)}
             className="fixed inset-0 z-[100] bg-background/95 backdrop-blur-sm grid place-items-center p-4"
           >
@@ -151,7 +148,7 @@ export function ImageGallery({ images }: { images: ImageT[] }) {
                 </button>
               </>
             )}
-          </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </div>
