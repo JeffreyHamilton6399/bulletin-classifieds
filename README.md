@@ -19,13 +19,15 @@ Bulletin is a regional classifieds platform where users browse and post listings
 
 ## Features
 
+- **Optional accounts** — sign up with email + password for a public profile (name, bio, avatar) and listings that follow you across devices. Passwords are hashed with scrypt (Node built-in, no dependencies). Prefer to stay anonymous? You can still post without an account — each listing gets a secret management token saved to your browser.
 - **Regions** — 8 US cities; all listings scoped to your selection, persisted across sessions
 - **Categories & subcategories** — 7 groups with ~5 subs each, hover-mega-menu navigation
 - **Post a listing** — full form with drag-to-reorder image upload (up to 12), price + labels (obo/firm/free/trade), 30-day auto-expiry, email validation, rate limiting
 - **Browse & search** — dense list view with filters (price range, category, keyword, "has image", sort) plus a custom stylized map view (dependency-free, plots listings by lat/lng with hover tooltips)
 - **Listing detail** — fluid swipeable image gallery with lightbox, full description, details panel, anonymous relay messaging, flag-for-removal (auto-removes at 5 flags), copy-link
-- **Your listings** — enter your email to view, renew, or remove everything you've posted (no password)
-- **Anti-spam** — community flagging, per-email rate limiting (5 posts/hr, 3 messages/hr), IP-deduped flags
+- **Your listings** — when signed in, manage everything from any device via your account; when anonymous, manage via per-listing tokens stored on your device
+- **Public profiles** — each user has a profile page (name, bio, avatar, active listings)
+- **Anti-spam** — community flagging, per-email rate limiting (5 posts/hr, 3 messages/hr), IP-deduped flags, signup rate limiting
 - **Responsive + dark mode** — mobile-first, sticky footer, full dark theme
 
 ## Tech stack
@@ -98,7 +100,8 @@ Then run `prisma db push` against your new database and re-seed.
 
 - `postinstall` runs `prisma generate` automatically
 - The default Vercel build (`next build`) works out of the box
-- No environment variables required for the SQLite demo; set `DATABASE_URL` only if you switch to Postgres
+- **Required env vars:** `NEXTAUTH_SECRET` (any random 32+ char string) and `NEXTAUTH_URL` (your deployment URL, e.g. `https://your-app.vercel.app`). Set both in Vercel Project Settings → Environment Variables. Generate a secret with `openssl rand -hex 32`.
+- Set `DATABASE_URL` only if you switch to Postgres for permanent persistence
 
 ## License
 

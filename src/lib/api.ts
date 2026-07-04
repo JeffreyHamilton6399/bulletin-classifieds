@@ -61,4 +61,10 @@ export const api = {
     jget<{ total: number; withImages: number; categories: number; today: number }>(
       `/api/stats${regionId ? `?regionId=${regionId}` : ''}`,
     ),
+  signup: (body: { name: string; email: string; password: string }) =>
+    jpost<{ id: string; email: string; name: string }>('/api/auth/signup', body),
+  me: () => jget<{ user: any; listings: any[] }>('/api/me'),
+  updateMe: (body: { bio?: string; name?: string }) =>
+    jpatch<any>('/api/me', body),
+  profile: (id: string) => jget<{ user: any; listings: any[] }>(`/api/profile/${id}`),
 }

@@ -9,6 +9,7 @@ import { BrowseView } from '@/components/marketplace/BrowseView'
 import { ListingDetail } from '@/components/marketplace/ListingDetail'
 import { PostListing } from '@/components/marketplace/PostListing'
 import { MyListings } from '@/components/marketplace/MyListings'
+import { ProfileView } from '@/components/marketplace/ProfileView'
 import { Footer } from '@/components/marketplace/Footer'
 
 export default function Home() {
@@ -37,6 +38,7 @@ export default function Home() {
             {view.name === 'listing' && <ListingDetail id={view.id} />}
             {view.name === 'post' && <PostListing />}
             {view.name === 'account' && <MyListings />}
+            {view.name === 'profile' && <ProfileView userId={view.userId} />}
           </motion.div>
         </AnimatePresence>
       </main>
@@ -53,5 +55,6 @@ function viewKey(view: ReturnType<typeof useNav>['view']): string {
     case 'listing': return `listing-${view.id}`
     case 'post': return 'post'
     case 'account': return 'account'
+    case 'profile': return `profile-${view.userId}`
   }
 }

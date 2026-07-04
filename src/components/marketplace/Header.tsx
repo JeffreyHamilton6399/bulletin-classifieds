@@ -3,11 +3,12 @@
 import { useQuery } from '@tanstack/react-query'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown, Search, PenLine, Moon, Sun, MapPin, UserRound } from 'lucide-react'
+import { ChevronDown, Search, PenLine, Moon, Sun, MapPin } from 'lucide-react'
 import { api } from '@/lib/api'
 import { useNav } from '@/store/nav'
 import { useTheme } from 'next-themes'
 import { cn } from '@/lib/utils'
+import { AuthButton } from './AuthButton'
 
 export function Header() {
   const { regionId, setRegion, go } = useNav()
@@ -118,15 +119,8 @@ export function Header() {
             {mounted && theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
           </button>
 
-          {/* Your listings */}
-          <button
-            onClick={() => go({ name: 'account' })}
-            className="shrink-0 size-8 grid place-items-center text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="Your listings"
-            title="Your listings"
-          >
-            <UserRound className="size-4" />
-          </button>
+          {/* Account / auth */}
+          <AuthButton />
 
           {/* Post button */}
           <button
