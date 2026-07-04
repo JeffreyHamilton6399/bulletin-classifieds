@@ -19,8 +19,8 @@ const item = {
 
 export function HomeView() {
   const { regionId, go, setRegion } = useNav()
-  const { data: regions } = useQuery({ queryKey: ['regions'], queryFn: api.regions })
-  const { data: categories } = useQuery({ queryKey: ['categories'], queryFn: api.categories })
+  const regionsQuery = useQuery({ queryKey: ['regions'], queryFn: api.regions })
+  const categoriesQuery = useQuery({ queryKey: ['categories'], queryFn: api.categories })
   const { data: recent } = useQuery({
     queryKey: ['listings', 'recent', regionId],
     queryFn: () => api.listings({ regionId: regionId!, limit: '24' }),
@@ -31,6 +31,34 @@ export function HomeView() {
     queryFn: () => api.stats(regionId!),
     enabled: !!regionId,
   })
+
+  // Database setup error — show clear instructions
+  const dbError = regionsQuery.error || categoriesQuery.error
+  if (dbError) {
+    return (
+      <div className="mx-auto max-w-2xl px-4 sm:px-6 py-12">
+        <div className="border hairline border-oxblood/40 bg-oxblood-soft rounded-md p-6">
+          <h2 className="font-serif text-2xl mb-2">Database not set up</h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            {String((dbError as Error).message)}
+          </p>
+          <div className="text-sm space-y-2">
+            <p className="font-medium">To fix this:</p>
+            <ol className="list-decimal list-inside space-y-1 text-muted-foreground">
+              <li>Open your <a href="https://supabase.com/dashboard" target="_blank" rel="noreferrer" className="text-oxblood hover:underline">Supabase dashboard</a></li>
+              <li>Go to <strong>SQL Editor</strong> → New query</li>
+              <li>Paste the contents of <code className="bg-muted px-1 rounded">supabase-setup.sql</code> from the repo</li>
+              <li>Click <strong>Run</strong></li>
+              <li>Refresh this page</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  const regions = regionsQuery.data
+  const categories = categoriesQuery.data
 
   // --- Region picker (no region) ---
   if (!regionId) {

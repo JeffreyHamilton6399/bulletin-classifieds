@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { ensureBooted } from '@/lib/ensure-seeded'
+import { withDbErrorHandler } from '@/lib/api-error'
 
 export const dynamic = 'force-dynamic'
 
-export async function GET() {
+export const GET = withDbErrorHandler(async () => {
   await ensureBooted()
   const cats = await db.category.findMany({
     orderBy: [{ sortOrder: 'asc' }, { name: 'asc' }],
@@ -25,4 +26,4 @@ export async function GET() {
     })),
   }))
   return NextResponse.json(nested)
-}
+})

@@ -2,10 +2,11 @@ import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { Prisma } from '@prisma/client'
 import { ensureBooted } from '@/lib/ensure-seeded'
+import { withDbErrorHandler } from '@/lib/api-error'
 
 export const dynamic = 'force-dynamic'
 
-export async function GET(req: NextRequest) {
+export const GET = withDbErrorHandler(async (req: NextRequest) => {
   await ensureBooted()
   const { searchParams } = new URL(req.url)
   const regionId = searchParams.get('regionId')
@@ -95,4 +96,4 @@ export async function GET(req: NextRequest) {
   }))
 
   return NextResponse.json(out)
-}
+})

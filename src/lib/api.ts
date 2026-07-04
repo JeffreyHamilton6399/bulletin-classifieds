@@ -2,8 +2,9 @@ import type { RegionT, CategoryT, ListingT } from './types'
 
 async function jget<T>(url: string): Promise<T> {
   const res = await fetch(url, { cache: 'no-store' })
-  if (!res.ok) throw new Error(`${res.status}`)
-  return res.json()
+  const data = await res.json().catch(() => ({}))
+  if (!res.ok) throw new Error((data as any).error || `${res.status}`)
+  return data as T
 }
 
 async function jpost<T>(url: string, body: unknown): Promise<T> {
