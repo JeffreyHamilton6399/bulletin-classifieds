@@ -80,6 +80,15 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    // Verify the session user still exists in the DB. On serverless, the DB
+    // can reset per cold start while the browser JWT persists — a "ghost"
+    // session pointing to a nonexistent user would violate the FK constraint.
+    let userId: string | null = null
+    if (session?.user?.id) {
+      const u = await db.user.findUnique({ where: { id: session.user.id }, select: { id: true } })
+      if (u) userId = u.id
+    }
+
     // Generate a strong, unique management token. This acts as the listing's
     // "key" — whoever holds it can renew/delete. Stored in the poster's
     // browser so only they (or anyone they share the link with) can manage.
@@ -101,7 +110,7 @@ export async function POST(req: NextRequest) {
         showPhone: !!showPhone,
         editToken,
         expiresAt,
-        userId: session?.user?.id || null,
+        userId,
         images:
           imgList.length > 0
             ? {

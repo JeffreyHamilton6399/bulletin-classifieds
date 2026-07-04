@@ -45,6 +45,7 @@ export function Footer() {
               About
             </h4>
             <ul className="space-y-1 text-muted-foreground">
+              <li><button onClick={() => go({ name: 'settings' })} className="hover:text-oxblood transition-colors">Settings</button></li>
               <li>Community-moderated</li>
               <li>Anonymous relay</li>
               <li>No tracking, no ads</li>

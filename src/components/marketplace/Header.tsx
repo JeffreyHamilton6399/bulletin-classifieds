@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown, Search, PenLine, MapPin, Settings } from 'lucide-react'
+import { ChevronDown, Search, PenLine, MapPin } from 'lucide-react'
 import { api } from '@/lib/api'
 import { useNav } from '@/store/nav'
 import { cn } from '@/lib/utils'
@@ -104,16 +104,6 @@ export function Header() {
               />
             </div>
           </form>
-
-          {/* Settings */}
-          <button
-            onClick={() => go({ name: 'settings' })}
-            className="shrink-0 size-8 grid place-items-center text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="Settings"
-            title="Settings"
-          >
-            <Settings className="size-4" />
-          </button>
 
           {/* Account / auth */}
           <AuthButton />
