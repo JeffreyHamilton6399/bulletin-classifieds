@@ -29,20 +29,33 @@ export function AuthModal({ open, onClose }: { open: boolean; onClose: () => voi
           setLoading(false)
           return
         }
+        // signup throws with the server's error message on failure
         await api.signup({ name: name.trim(), email, password })
         // auto-login after signup
         const res = await signIn('credentials', { email, password, redirect: false })
-        if (res?.error) throw new Error('Account created, but login failed')
+        if (res?.error) {
+          // account was created but auto-login failed — switch to login mode
+          toast.success('Account created! Please sign in.')
+          setMode('login')
+          setLoading(false)
+          return
+        }
         toast.success(`Welcome, ${name.trim().split(' ')[0]}!`)
       } else {
         const res = await signIn('credentials', { email, password, redirect: false })
-        if (res?.error) throw new Error('Wrong email or password')
+        if (res?.error) {
+          throw new Error(
+            res.status === 401 ? 'Wrong email or password' : `Sign in failed (${res.status || 'error'})`,
+          )
+        }
         toast.success('Signed in')
       }
       qc.invalidateQueries({ queryKey: ['me'] })
       onClose()
       setName(''); setEmail(''); setPassword('')
     } catch (e: any) {
+      // surface the actual server error message (e.g. "email already exists",
+      // "rate limit", or a 500 detail) instead of a generic string
       toast.error(e.message || 'Something went wrong')
     } finally {
       setLoading(false)
