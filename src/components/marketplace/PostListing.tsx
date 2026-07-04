@@ -1,12 +1,13 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState, useRef, useCallback } from 'react'
 import { motion, AnimatePresence, Reorder } from 'framer-motion'
 import { toast } from 'sonner'
 import { ArrowLeft, X, Upload, ImagePlus, Loader2, Check, Info, ShieldCheck } from 'lucide-react'
 import { api } from '@/lib/api'
 import { useNav } from '@/store/nav'
+import { useSession } from '@/lib/next-auth-client'
 import { storeListingToken } from '@/lib/tokens'
 import { cn } from '@/lib/utils'
 
@@ -20,6 +21,8 @@ const PRICE_LABELS = [
 
 export function PostListing() {
   const { regionId, go } = useNav()
+  const qc = useQueryClient()
+  const { data: session } = useSession()
   const { data: regions } = useQuery({ queryKey: ['regions'], queryFn: api.regions })
   const { data: categories } = useQuery({ queryKey: ['categories'], queryFn: api.categories })
   const region = regions?.find((r) => r.id === regionId)
@@ -87,7 +90,10 @@ export function PostListing() {
         title: created.title,
         postedAt: created.createdAt,
       })
-      toast.success('Listing published — saved to Your listings on this device')
+      // Refresh the profile cache so the new listing appears immediately
+      qc.invalidateQueries({ queryKey: ['me'] })
+      qc.invalidateQueries({ queryKey: ['listings'] })
+      toast.success('Listing published')
       go({ name: 'listing', id: created.id })
     } catch (e: any) {
       setError(e.message || 'Failed to post.')
@@ -114,11 +120,14 @@ export function PostListing() {
       >
         <h1 className="font-serif text-4xl tracking-tight">Post a listing</h1>
         <p className="text-sm text-muted-foreground mt-1">
-          in <span className="text-foreground">{region?.name}, {region?.state}</span> · listings auto-expire after 30 days
+          {session ? (
+            <>posting as <span className="text-foreground">{session.user?.name}</span> · </>
+          ) : null}
+          in <span className="text-foreground">{region?.name}, {region?.state}</span> · auto-expires in 30 days
         </p>
       </motion.div>
 
-      {/* How it works — no account needed */}
+      {/* How it works */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -128,10 +137,14 @@ export function PostListing() {
         <div className="bg-background p-3.5">
           <div className="flex items-center gap-1.5 text-oxblood">
             <ShieldCheck className="size-3.5" />
-            <span className="font-mono text-[10px] uppercase tracking-wider">No account</span>
+            <span className="font-mono text-[10px] uppercase tracking-wider">
+              {session ? 'On your profile' : 'No account needed'}
+            </span>
           </div>
           <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
-            Post with just an email. No signup, no password — ever.
+            {session
+              ? 'Posts appear on your profile, manageable from any device.'
+              : 'Post with just an email. Sign up later to save them to a profile.'}
           </p>
         </div>
         <div className="bg-background p-3.5">
@@ -146,10 +159,10 @@ export function PostListing() {
         <div className="bg-background p-3.5">
           <div className="flex items-center gap-1.5 text-oxblood">
             <Check className="size-3.5" />
-            <span className="font-mono text-[10px] uppercase tracking-wider">Token-protected</span>
+            <span className="font-mono text-[10px] uppercase tracking-wider">30-day listings</span>
           </div>
           <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
-            A secret key is saved to this device so only you can renew or remove.
+            Renew anytime to keep them live. Expired posts are automatically removed.
           </p>
         </div>
       </motion.div>

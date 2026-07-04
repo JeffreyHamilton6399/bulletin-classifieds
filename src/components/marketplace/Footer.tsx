@@ -34,7 +34,6 @@ export function Footer() {
             </h4>
             <ul className="space-y-1">
               <li><button onClick={() => go({ name: 'post' })} className="hover:text-oxblood transition-colors">Create listing</button></li>
-              <li><button onClick={() => go({ name: 'account' })} className="hover:text-oxblood transition-colors">Your listings</button></li>
               <li><span className="text-muted-foreground">30-day expiry</span></li>
               <li><span className="text-muted-foreground">Free to post</span></li>
               <li><span className="text-muted-foreground">Up to 12 photos</span></li>

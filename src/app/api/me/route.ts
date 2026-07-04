@@ -13,6 +13,11 @@ export async function PATCH(req: NextRequest) {
   if (!session?.user?.id) {
     return NextResponse.json({ error: 'Sign in required' }, { status: 401 })
   }
+  // Guard against ghost sessions (user deleted by a DB reset on serverless)
+  const exists = await db.user.findUnique({ where: { id: session.user.id }, select: { id: true } })
+  if (!exists) {
+    return NextResponse.json({ error: 'Session expired — please sign in again' }, { status: 401 })
+  }
   let body: any
   try {
     body = await req.json()
@@ -43,6 +48,10 @@ export async function GET() {
       id: true, email: true, name: true, bio: true, avatarColor: true, createdAt: true,
     },
   })
+  // Ghost session: the JWT points to a user that no longer exists (DB reset)
+  if (!user) {
+    return NextResponse.json({ error: 'Session expired — please sign in again' }, { status: 401 })
+  }
   const listings = await db.listing.findMany({
     where: { userId: session.user.id },
     orderBy: { createdAt: 'desc' },

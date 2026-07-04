@@ -2,11 +2,12 @@
 
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
-import { useSession } from '@/lib/next-auth-client'
+import { useSession, signOut } from '@/lib/next-auth-client'
 import { motion } from 'framer-motion'
 import { toast } from 'sonner'
 import {
-  ArrowLeft, MapPin, Clock, Eye, Pencil, Check, Loader2, ImageOff, Mail,
+  ArrowLeft, Pencil, Check, Loader2, ImageOff, Mail,
+  RefreshCw, Trash2, Clock, Eye,
 } from 'lucide-react'
 import { api } from '@/lib/api'
 import { useNav } from '@/store/nav'
@@ -21,30 +22,44 @@ const AVATAR_COLORS: Record<string, string> = {
   teal: 'bg-teal-700',
 }
 
+function expiresIn(iso: string): string {
+  const diff = new Date(iso).getTime() - Date.now()
+  const day = 86400000
+  if (diff <= 0) return 'expired'
+  const days = Math.floor(diff / day)
+  if (days < 1) return `${Math.floor(diff / 3600000)}h left`
+  return `${days}d left`
+}
+
 export function ProfileView({ userId }: { userId: string }) {
   const { go } = useNav()
   const { data: session } = useSession()
   const qc = useQueryClient()
   const isOwn = session?.user?.id === userId
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: isOwn ? ['me'] : ['profile', userId],
     queryFn: () => (isOwn ? api.me() : api.profile(userId)),
+    retry: false,
   })
 
   const [editing, setEditing] = useState(false)
   const [bio, setBio] = useState('')
   const [name, setName] = useState('')
   const [saving, setSaving] = useState(false)
+  const [busy, setBusy] = useState<string | null>(null)
 
-  // sync local state when data loads (for editing)
+  // Auto sign-out on ghost session (401 from /api/me)
+  if (isOwn && error && (error as any).message?.includes('401')) {
+    toast.error('Your session expired — signing you out')
+    signOut({ redirect: false })
+    go({ name: 'home' })
+  }
+
   const user = data?.user
+  // one-shot init of edit fields
   if (user && !editing && name === '' && user.name) {
-    // one-shot init
-    setTimeout(() => {
-      setName(user.name)
-      setBio(user.bio || '')
-    }, 0)
+    setTimeout(() => { setName(user.name); setBio(user.bio || '') }, 0)
   }
 
   const save = async () => {
@@ -58,6 +73,33 @@ export function ProfileView({ userId }: { userId: string }) {
       toast.error(e.message || 'Could not save')
     } finally {
       setSaving(false)
+    }
+  }
+
+  const renew = async (id: string, token: string) => {
+    setBusy(id + '-renew')
+    try {
+      await api.renewListing(id, token)
+      toast.success('Listing renewed for 30 more days')
+      qc.invalidateQueries({ queryKey: ['me'] })
+    } catch (e: any) {
+      toast.error(e.message || 'Could not renew')
+    } finally {
+      setBusy(null)
+    }
+  }
+
+  const remove = async (id: string, token: string) => {
+    if (!confirm('Remove this listing?')) return
+    setBusy(id + '-del')
+    try {
+      await api.deleteListing(id, token)
+      toast.success('Listing removed')
+      qc.invalidateQueries({ queryKey: ['me'] })
+    } catch (e: any) {
+      toast.error(e.message || 'Could not remove')
+    } finally {
+      setBusy(null)
     }
   }
 
@@ -77,6 +119,11 @@ export function ProfileView({ userId }: { userId: string }) {
     return (
       <div className="mx-auto max-w-4xl px-4 sm:px-6 py-20 text-center">
         <p className="font-serif text-3xl mb-2">Profile not found.</p>
+        <p className="text-muted-foreground mb-6">
+          {isOwn
+            ? 'Your session may have expired. Try signing in again.'
+            : 'This user may no longer exist.'}
+        </p>
         <button onClick={() => go({ name: 'home' })} className="text-oxblood hover:underline">
           ← back home
         </button>
@@ -179,40 +226,73 @@ export function ProfileView({ userId }: { userId: string }) {
 
         {listings.length === 0 ? (
           <div className="py-12 text-center text-sm text-muted-foreground">
-            {isOwn ? 'You haven’t posted anything yet.' : 'No active listings.'}
+            {isOwn ? (
+              <>
+                <p className="mb-3">You haven’t posted anything yet.</p>
+                <button onClick={() => go({ name: 'post' })} className="text-oxblood hover:underline">
+                  Post your first listing →
+                </button>
+              </>
+            ) : 'No active listings.'}
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {listings.map((l: any, i: number) => (
-              <motion.button
+              <motion.div
                 key={l.id}
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: Math.min(i * 0.04, 0.4), duration: 0.25 }}
-                onClick={() => go({ name: 'listing', id: l.id })}
-                className="group text-left"
+                className="group"
               >
-                <div className="aspect-square bg-muted overflow-hidden rounded-sm border hairline mb-1.5">
-                  {l._thumb ? (
-                    <img
-                      src={l._thumb}
-                      alt=""
-                      className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
-                    />
-                  ) : (
-                    <div className="w-full h-full grid place-items-center text-muted-foreground/30">
-                      <ImageOff className="size-5" />
-                    </div>
-                  )}
-                </div>
-                <div className="text-xs font-medium leading-snug line-clamp-2 group-hover:text-oxblood transition-colors">
-                  {l.title}
-                </div>
-                <div className="mt-0.5 flex items-center justify-between text-[11px] font-mono text-muted-foreground">
-                  <span>{formatPrice(l.price, l.priceLabel)}</span>
-                  <span>{relativeTime(l.createdAt)}</span>
-                </div>
-              </motion.button>
+                <button
+                  onClick={() => go({ name: 'listing', id: l.id })}
+                  className="block w-full text-left"
+                >
+                  <div className="aspect-square bg-muted overflow-hidden rounded-sm border hairline mb-1.5 relative">
+                    {l._thumb ? (
+                      <img src={l._thumb} alt="" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300" />
+                    ) : (
+                      <div className="w-full h-full grid place-items-center text-muted-foreground/30">
+                        <ImageOff className="size-5" />
+                      </div>
+                    )}
+                    {l.status === 'REMOVED' && (
+                      <div className="absolute inset-0 bg-background/70 grid place-items-center">
+                        <span className="text-xs font-mono text-muted-foreground">removed</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="text-xs font-medium leading-snug line-clamp-2 group-hover:text-oxblood transition-colors">
+                    {l.title}
+                  </div>
+                  <div className="mt-0.5 flex items-center justify-between text-[11px] font-mono text-muted-foreground">
+                    <span>{formatPrice(l.price, l.priceLabel)}</span>
+                    <span>{relativeTime(l.createdAt)}</span>
+                  </div>
+                </button>
+                {/* Manage controls for own listings */}
+                {isOwn && l.status !== 'REMOVED' && l.editToken && (
+                  <div className="mt-1 flex gap-1.5">
+                    <button
+                      onClick={() => renew(l.id, l.editToken)}
+                      disabled={busy === l.id + '-renew'}
+                      title="Renew"
+                      className="flex-1 h-7 border hairline rounded-sm text-[11px] flex items-center justify-center gap-1 hover:bg-accent transition-colors disabled:opacity-50"
+                    >
+                      {busy === l.id + '-renew' ? <Loader2 className="size-3 animate-spin" /> : <RefreshCw className="size-3" />}
+                    </button>
+                    <button
+                      onClick={() => remove(l.id, l.editToken)}
+                      disabled={busy === l.id + '-del'}
+                      title="Remove"
+                      className="flex-1 h-7 border hairline border-oxblood/30 text-oxblood rounded-sm text-[11px] flex items-center justify-center gap-1 hover:bg-oxblood-soft transition-colors disabled:opacity-50"
+                    >
+                      {busy === l.id + '-del' ? <Loader2 className="size-3 animate-spin" /> : <Trash2 className="size-3" />}
+                    </button>
+                  </div>
+                )}
+              </motion.div>
             ))}
           </div>
         )}

@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useSession, signOut } from '@/lib/next-auth-client'
 import { motion, AnimatePresence } from 'framer-motion'
 import { toast } from 'sonner'
-import { UserRound, LogOut, LayoutGrid, ChevronDown, Settings } from 'lucide-react'
+import { UserRound, LogOut, ChevronDown, Settings } from 'lucide-react'
 import { useNav } from '@/store/nav'
 import { AuthModal } from './AuthModal'
 
@@ -98,16 +98,6 @@ export function AuthButton() {
               >
                 <UserRound className="size-3.5" />
                 Your profile
-              </button>
-              <button
-                onClick={() => {
-                  setMenuOpen(false)
-                  go({ name: 'account' })
-                }}
-                className="flex w-full items-center gap-2 px-3 py-1.5 text-sm hover:bg-accent transition-colors text-left"
-              >
-                <LayoutGrid className="size-3.5" />
-                Your listings
               </button>
               <button
                 onClick={() => {
