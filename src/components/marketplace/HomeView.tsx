@@ -49,22 +49,33 @@ export function HomeView() {
   }, [regions, regionId, setRegion])
 
   if (dbError) {
+    const errMsg = String((dbError as Error).message)
     return (
       <div className="mx-auto max-w-2xl px-4 sm:px-6 py-12">
         <div className="border hairline border-oxblood/40 bg-oxblood-soft rounded-md p-6">
           <h2 className="font-serif text-2xl mb-2">Database not set up</h2>
-          <p className="text-sm text-muted-foreground mb-4">
-            {String((dbError as Error).message)}
-          </p>
-          <div className="text-sm space-y-2">
-            <p className="font-medium">To fix this:</p>
-            <ol className="list-decimal list-inside space-y-1 text-muted-foreground">
-              <li>Open your <a href="https://supabase.com/dashboard" target="_blank" rel="noreferrer" className="text-oxblood hover:underline">Supabase dashboard</a></li>
-              <li>Go to <strong>SQL Editor</strong> → New query</li>
-              <li>Paste the contents of <code className="bg-muted px-1 rounded">supabase-setup.sql</code> from the repo</li>
-              <li>Click <strong>Run</strong></li>
-              <li>Refresh this page</li>
+          <p className="text-sm text-foreground/80 mb-4 font-mono">{errMsg}</p>
+          <div className="text-sm space-y-3">
+            <p className="font-medium">Setup checklist:</p>
+            <ol className="list-decimal list-inside space-y-1.5 text-muted-foreground">
+              <li>Create a free project at <a href="https://supabase.com" target="_blank" rel="noreferrer" className="text-oxblood hover:underline">supabase.com</a></li>
+              <li>In Supabase → <strong>SQL Editor</strong> → paste <code className="bg-muted px-1 rounded text-xs">supabase-setup.sql</code> → <strong>Run</strong></li>
+              <li>In Supabase → <strong>Storage</strong> → create a public bucket named <code className="bg-muted px-1 rounded text-xs">listings</code></li>
+              <li>In Vercel → <strong>Settings → Environment Variables</strong>, add these 5:
+                <div className="mt-2 ml-4 space-y-1 text-xs font-mono bg-muted p-3 rounded">
+                  <div>DATABASE_URL=<span className="text-muted-foreground">postgresql://postgres.REF:PASS@aws-0-REGION.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1</span></div>
+                  <div>NEXT_PUBLIC_SUPABASE_URL=<span className="text-muted-foreground">https://REF.supabase.co</span></div>
+                  <div>SUPABASE_SERVICE_ROLE_KEY=<span className="text-muted-foreground">your-key</span></div>
+                  <div>NEXTAUTH_SECRET=<span className="text-muted-foreground">any-random-32-chars</span></div>
+                  <div>NEXTAUTH_URL=<span className="text-muted-foreground">https://your-app.vercel.app</span></div>
+                </div>
+              </li>
+              <li>In Vercel → <strong>Deployments</strong> → ⋯ → <strong>Redeploy</strong></li>
             </ol>
+            <p className="text-xs text-muted-foreground mt-3">
+              The DATABASE_URL must use the <strong>Transaction pooler</strong> (port 6543),
+              not the direct connection (port 5432) — Vercel serverless can't reach the direct one.
+            </p>
           </div>
         </div>
       </div>

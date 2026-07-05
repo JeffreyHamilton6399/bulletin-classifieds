@@ -4,6 +4,10 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
 }
 
+if (!process.env.DATABASE_URL) {
+  console.error('FATAL: DATABASE_URL environment variable is not set.')
+}
+
 export const db =
   globalForPrisma.prisma ??
   new PrismaClient({
