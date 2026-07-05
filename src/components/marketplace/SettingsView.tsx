@@ -3,8 +3,9 @@
 import { useTheme } from 'next-themes'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowLeft, Sun, Moon, Check } from 'lucide-react'
+import { Sun, Moon, Check } from 'lucide-react'
 import { useNav } from '@/store/nav'
+import { Breadcrumbs } from './Breadcrumbs'
 import { cn } from '@/lib/utils'
 
 export function SettingsView() {
@@ -21,13 +22,12 @@ export function SettingsView() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 sm:px-6 py-6">
-      <button
-        onClick={() => go({ name: 'home' })}
-        className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground hover:text-oxblood transition-colors mb-4"
-      >
-        <ArrowLeft className="size-3.5" />
-        back home
-      </button>
+      <Breadcrumbs
+        items={[
+          { label: 'Home', view: { name: 'home' } },
+          { label: 'Settings' },
+        ]}
+      />
 
       <motion.div
         initial={{ opacity: 0, y: 8 }}

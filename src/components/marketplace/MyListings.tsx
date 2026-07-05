@@ -5,11 +5,12 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'framer-motion'
 import { toast } from 'sonner'
 import {
-  ArrowLeft, RefreshCw, Trash2, Eye, Clock, ImageOff, Loader2, Inbox,
+  RefreshCw, Trash2, Eye, Clock, ImageOff, Loader2, Inbox,
   KeyRound, Plus, Link2, Copy, ShieldCheck, ExternalLink,
 } from 'lucide-react'
 import { api } from '@/lib/api'
 import { useNav } from '@/store/nav'
+import { Breadcrumbs } from './Breadcrumbs'
 import { formatPrice } from '@/lib/types'
 import {
  getTokenStrings, parseManageInput, addToken, removeStoredToken,
@@ -115,13 +116,12 @@ export function MyListings() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 py-6">
-      <button
-        onClick={() => go({ name: 'home' })}
-        className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground hover:text-oxblood transition-colors mb-4"
-      >
-        <ArrowLeft className="size-3.5" />
-        back home
-      </button>
+      <Breadcrumbs
+        items={[
+          { label: 'Home', view: { name: 'home' } },
+          { label: 'Manage listings' },
+        ]}
+      />
 
       <motion.div
         initial={{ opacity: 0, y: 8 }}

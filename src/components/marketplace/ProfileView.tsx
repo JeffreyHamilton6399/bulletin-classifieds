@@ -6,11 +6,12 @@ import { useSession, signOut } from '@/lib/next-auth-client'
 import { motion } from 'framer-motion'
 import { toast } from 'sonner'
 import {
-  ArrowLeft, Pencil, Check, Loader2, ImageOff, Mail,
+  Pencil, Check, Loader2, ImageOff, Mail,
   RefreshCw, Trash2,
 } from 'lucide-react'
 import { api } from '@/lib/api'
 import { useNav } from '@/store/nav'
+import { Breadcrumbs } from './Breadcrumbs'
 import { formatPrice, relativeTime } from '@/lib/types'
 
 const AVATAR_COLORS: Record<string, string> = {
@@ -148,13 +149,12 @@ export function ProfileView({ userId }: { userId: string }) {
 
   return (
     <div className="mx-auto max-w-4xl px-4 sm:px-6 py-6">
-      <button
-        onClick={() => go({ name: 'home' })}
-        className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground hover:text-oxblood transition-colors mb-5"
-      >
-        <ArrowLeft className="size-3.5" />
-        back home
-      </button>
+      <Breadcrumbs
+        items={[
+          { label: 'Home', view: { name: 'home' } },
+          { label: isOwn ? 'Your profile' : 'Profile' },
+        ]}
+      />
 
       {/* Header card */}
       <motion.div

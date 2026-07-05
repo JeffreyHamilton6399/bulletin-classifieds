@@ -4,11 +4,12 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState, useRef, useCallback } from 'react'
 import { motion, AnimatePresence, Reorder } from 'framer-motion'
 import { toast } from 'sonner'
-import { ArrowLeft, X, Upload, ImagePlus, Loader2, Check, Info, ShieldCheck } from 'lucide-react'
+import { X, Upload, ImagePlus, Loader2, Check, Info, ShieldCheck } from 'lucide-react'
 import { api } from '@/lib/api'
 import { useNav } from '@/store/nav'
 import { useSession } from '@/lib/next-auth-client'
 import { storeListingToken } from '@/lib/tokens'
+import { Breadcrumbs } from './Breadcrumbs'
 import { cn } from '@/lib/utils'
 
 const PRICE_LABELS = [
@@ -105,13 +106,12 @@ export function PostListing() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 sm:px-6 py-5">
-      <button
-        onClick={() => go({ name: 'home' })}
-        className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground hover:text-oxblood transition-colors mb-4"
-      >
-        <ArrowLeft className="size-3.5" />
-        cancel
-      </button>
+      <Breadcrumbs
+        items={[
+          { label: 'Home', view: { name: 'home' } },
+          { label: 'Post a listing' },
+        ]}
+      />
 
       <motion.div
         initial={{ opacity: 0, y: 8 }}

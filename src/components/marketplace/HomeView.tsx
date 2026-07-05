@@ -73,11 +73,29 @@ export function HomeView() {
               </li>
               <li>In Vercel → <strong>Deployments</strong> → ⋯ → <strong>Redeploy</strong></li>
             </ol>
-            <p className="text-xs text-muted-foreground mt-3">
-              The DATABASE_URL must use the <strong>Transaction pooler</strong> (port 6543),
-              not the direct connection (port 5432) — Vercel serverless can't reach the direct one.
-            </p>
           </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Loading state
+  if (!regions) {
+    return (
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 py-12 sm:py-20">
+        <div className="animate-pulse">
+          <div className="h-4 w-32 bg-muted rounded mb-4" />
+          <div className="h-16 w-80 bg-muted rounded mb-2" />
+          <div className="h-16 w-64 bg-muted rounded mb-6" />
+          <div className="h-4 w-96 bg-muted rounded" />
+        </div>
+        <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-px bg-border border hairline rounded-sm overflow-hidden">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="bg-background p-5 animate-pulse">
+              <div className="h-3 w-8 bg-muted rounded mb-2" />
+              <div className="h-5 w-24 bg-muted rounded" />
+            </div>
+          ))}
         </div>
       </div>
     )
@@ -93,7 +111,7 @@ export function HomeView() {
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         >
           <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground mb-4">
-            Local classifieds, since now
+            Local classifieds
           </p>
           <h1 className="font-serif text-5xl sm:text-7xl leading-[0.95] tracking-tight text-balance">
             Where are<br />
@@ -109,7 +127,7 @@ export function HomeView() {
           variants={stagger}
           initial="hidden"
           animate="show"
-          className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-px bg-border border hairline"
+          className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-px bg-border border hairline rounded-sm overflow-hidden"
         >
           {regions?.map((r) => (
             <motion.button
@@ -118,7 +136,7 @@ export function HomeView() {
               onClick={() => setRegion(r.id)}
               className="group bg-background p-5 text-left hover:bg-accent/50 transition-colors"
             >
-              <div className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+              <div className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground group-hover:text-oxblood transition-colors">
                 {r.state}
               </div>
               <div className="mt-1 text-lg font-medium tracking-tight group-hover:text-oxblood transition-colors">

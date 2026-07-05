@@ -8,6 +8,7 @@ import { api } from '@/lib/api'
 import { useNav } from '@/store/nav'
 import { ListingRow } from './ListingRow'
 import { MapView } from './MapView'
+import { Breadcrumbs } from './Breadcrumbs'
 import { cn } from '@/lib/utils'
 
 const SORTS = [
@@ -156,23 +157,20 @@ export function BrowseView({ initialCategory, initialQ }: { initialCategory?: st
 
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-6 py-5">
-      {/* Breadcrumb / title */}
-      <div className="mb-4">
-        <button
-          onClick={() => go({ name: 'home' })}
-          className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground hover:text-oxblood transition-colors"
-        >
-          ← {region?.name}
-        </button>
-        <div className="flex items-baseline gap-3 mt-1 flex-wrap">
-          <h1 className="font-serif text-3xl tracking-tight">
-            {activeCat ? activeCat.name : q ? `“${q}”` : 'All listings'}
-          </h1>
-          <span className="font-mono text-xs text-muted-foreground">
-            {listings?.length ?? 0} results
-            {isFetching && ' · …'}
-          </span>
-        </div>
+      <Breadcrumbs
+        items={[
+          { label: region?.name || 'Home', view: { name: 'home' } },
+          { label: activeCat ? activeCat.name : q ? `Search: "${q}"` : 'All listings' },
+        ]}
+      />
+      <div className="flex items-baseline gap-3 mb-4 flex-wrap">
+        <h1 className="font-serif text-3xl tracking-tight">
+          {activeCat ? activeCat.name : q ? `“${q}”` : 'All listings'}
+        </h1>
+        <span className="font-mono text-xs text-muted-foreground">
+          {listings?.length ?? 0} {listings?.length === 1 ? 'result' : 'results'}
+          {isFetching && ' · …'}
+        </span>
       </div>
 
       {/* Mobile filter toggle */}

@@ -5,11 +5,12 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { toast } from 'sonner'
 import {
-  ArrowLeft, Flag, Eye, MapPin, Send, ShieldCheck, Copy, Check,
+  Flag, Eye, MapPin, Send, ShieldCheck, Copy, Check,
 } from 'lucide-react'
 import { api } from '@/lib/api'
 import { useNav } from '@/store/nav'
 import { ImageGallery } from './ImageGallery'
+import { Breadcrumbs } from './Breadcrumbs'
 import { formatPrice, fullDate, relativeTime, type ListingT } from '@/lib/types'
 import { cn } from '@/lib/utils'
 
@@ -59,8 +60,8 @@ export function ListingDetail({ id }: { id: string }) {
       <div className="mx-auto max-w-5xl px-4 sm:px-6 py-20 text-center">
         <p className="font-serif text-3xl mb-2">This listing is gone.</p>
         <p className="text-muted-foreground mb-6">It may have expired, sold, or been removed.</p>
-        <button onClick={() => go({ name: 'home' })} className="text-oxblood hover:underline">
-          ← back home
+        <button onClick={() => go({ name: 'browse' })} className="text-oxblood hover:underline">
+          ← back to listings
         </button>
       </div>
     )
@@ -75,14 +76,12 @@ export function ListingDetail({ id }: { id: string }) {
 
   return (
     <div className="mx-auto max-w-5xl px-4 sm:px-6 py-5">
-      {/* Back */}
-      <button
-        onClick={() => go({ name: 'browse' })}
-        className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground hover:text-oxblood transition-colors mb-4"
-      >
-        <ArrowLeft className="size-3.5" />
-        back to listings
-      </button>
+      <Breadcrumbs
+        items={[
+          { label: 'Listings', view: { name: 'browse' } },
+          { label: listing.category?.name || 'Listing' },
+        ]}
+      />
 
       <motion.div
         initial={{ opacity: 0, y: 8 }}
