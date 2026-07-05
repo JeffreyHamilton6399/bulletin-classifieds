@@ -3,14 +3,36 @@ import { existsSync, readdirSync } from 'fs'
 import path from 'path'
 
 const REGIONS = [
-  { name: 'San Francisco', slug: 'sfbay', state: 'CA', lat: 37.7749, lng: -122.4194, radiusKm: 20 },
-  { name: 'New York City', slug: 'nyc', state: 'NY', lat: 40.7128, lng: -74.006, radiusKm: 25 },
-  { name: 'Austin', slug: 'austin', state: 'TX', lat: 30.2672, lng: -97.7431, radiusKm: 30 },
-  { name: 'Portland', slug: 'portland', state: 'OR', lat: 45.5152, lng: -122.6784, radiusKm: 25 },
+  { name: 'San Francisco', slug: 'san-francisco', state: 'CA', lat: 37.7749, lng: -122.4194, radiusKm: 20 },
+  { name: 'New York City', slug: 'new-york-city', state: 'NY', lat: 40.7128, lng: -74.006, radiusKm: 25 },
+  { name: 'Los Angeles', slug: 'los-angeles', state: 'CA', lat: 34.0522, lng: -118.2437, radiusKm: 30 },
   { name: 'Chicago', slug: 'chicago', state: 'IL', lat: 41.8781, lng: -87.6298, radiusKm: 30 },
-  { name: 'Seattle', slug: 'seattle', state: 'WA', lat: 47.6062, lng: -122.3321, radiusKm: 25 },
+  { name: 'Houston', slug: 'houston', state: 'TX', lat: 29.7604, lng: -95.3698, radiusKm: 35 },
+  { name: 'Phoenix', slug: 'phoenix', state: 'AZ', lat: 33.4484, lng: -112.074, radiusKm: 35 },
+  { name: 'Philadelphia', slug: 'philadelphia', state: 'PA', lat: 39.9526, lng: -75.1652, radiusKm: 25 },
+  { name: 'San Antonio', slug: 'san-antonio', state: 'TX', lat: 29.4241, lng: -98.4936, radiusKm: 30 },
+  { name: 'San Diego', slug: 'san-diego', state: 'CA', lat: 32.7157, lng: -117.1611, radiusKm: 30 },
+  { name: 'Dallas', slug: 'dallas', state: 'TX', lat: 32.7767, lng: -96.797, radiusKm: 35 },
+  { name: 'Austin', slug: 'austin', state: 'TX', lat: 30.2672, lng: -97.7431, radiusKm: 30 },
+  { name: 'Jacksonville', slug: 'jacksonville', state: 'FL', lat: 30.3322, lng: -81.6557, radiusKm: 35 },
+  { name: 'Fort Worth', slug: 'fort-worth', state: 'TX', lat: 32.7555, lng: -97.3308, radiusKm: 30 },
+  { name: 'Columbus', slug: 'columbus', state: 'OH', lat: 39.9612, lng: -82.9988, radiusKm: 30 },
+  { name: 'Charlotte', slug: 'charlotte', state: 'NC', lat: 35.2271, lng: -80.8431, radiusKm: 30 },
+  { name: 'Indianapolis', slug: 'indianapolis', state: 'IN', lat: 39.7684, lng: -86.1581, radiusKm: 30 },
+  { name: 'San Jose', slug: 'san-jose', state: 'CA', lat: 37.3382, lng: -121.8863, radiusKm: 20 },
   { name: 'Denver', slug: 'denver', state: 'CO', lat: 39.7392, lng: -104.9903, radiusKm: 30 },
+  { name: 'Seattle', slug: 'seattle', state: 'WA', lat: 47.6062, lng: -122.3321, radiusKm: 25 },
   { name: 'Boston', slug: 'boston', state: 'MA', lat: 42.3601, lng: -71.0589, radiusKm: 25 },
+  { name: 'Portland', slug: 'portland', state: 'OR', lat: 45.5152, lng: -122.6784, radiusKm: 25 },
+  { name: 'Nashville', slug: 'nashville', state: 'TN', lat: 36.1627, lng: -86.7816, radiusKm: 30 },
+  { name: 'Las Vegas', slug: 'las-vegas', state: 'NV', lat: 36.1699, lng: -115.1398, radiusKm: 30 },
+  { name: 'Atlanta', slug: 'atlanta', state: 'GA', lat: 33.749, lng: -84.388, radiusKm: 30 },
+  { name: 'Miami', slug: 'miami', state: 'FL', lat: 25.7617, lng: -80.1918, radiusKm: 25 },
+  { name: 'Minneapolis', slug: 'minneapolis', state: 'MN', lat: 44.9778, lng: -93.265, radiusKm: 30 },
+  { name: 'Tampa', slug: 'tampa', state: 'FL', lat: 27.9506, lng: -82.4572, radiusKm: 30 },
+  { name: 'New Orleans', slug: 'new-orleans', state: 'LA', lat: 29.9511, lng: -90.0715, radiusKm: 25 },
+  { name: 'Pittsburgh', slug: 'pittsburgh', state: 'PA', lat: 40.4406, lng: -79.9959, radiusKm: 25 },
+  { name: 'Sacramento', slug: 'sacramento', state: 'CA', lat: 38.5816, lng: -121.4944, radiusKm: 25 },
 ]
 
 const CATEGORIES: { name: string; slug: string; icon: string; subs: { name: string; slug: string }[] }[] = [
@@ -174,13 +196,13 @@ async function main(prisma: PrismaClient) {
     {
       title: 'Moog Grandmother analog synthesizer — barely used',
       desc: 'Selling my Moog Grandmother. Bought new 2 years ago, played lightly in a smoke-free home studio. All patch points work perfectly, knobs are clean. Comes with original power supply and a handful of patch cables. Selling because I upgraded to a modular rig. Local pickup preferred, can ship at buyer\'s expense.',
-      price: 720, priceLabel: 'obo', catSlug: 'mus', regionSlug: 'sfbay', loc: 'Mission District, SF',
+      price: 720, priceLabel: 'obo', catSlug: 'mus', regionSlug: 'san-francisco', loc: 'Mission District, SF',
       email: EMAILS[0], name: 'Morgan', imgs: [img('synth')!].filter(Boolean), daysAgo: 1,
     },
     {
       title: 'Bright studio — Mission District, utilities included',
       desc: 'Top-floor studio in a quiet building. South-facing window gets afternoon light all year. Kitchen has gas range, full-size fridge. Shared laundry in basement. Walk to BART in 8 minutes, Dolores Park in 12. No pets, no smoking. First + last + deposit. Available March 1st.',
-      price: 2100, catSlug: 'apa', regionSlug: 'sfbay', loc: 'Mission District, SF',
+      price: 2100, catSlug: 'apa', regionSlug: 'san-francisco', loc: 'Mission District, SF',
       email: EMAILS[1], name: 'K. Delacroix', imgs: [img('apartment')!].filter(Boolean), daysAgo: 2,
     },
     {
@@ -211,7 +233,7 @@ async function main(prisma: PrismaClient) {
     {
       title: 'Vintage leather satchel, full-grain, beautifully worn',
       desc: 'Hand-stitched full-grain leather messenger bag, probably 1980s. No brand label but clearly well-made. Patina is gorgeous — it\'s been loved. One interior pocket needs re-stitching (minor). Brass hardware has a nice tarnish. Measures about 16" x 11" x 5".',
-      price: 95, catSlug: 'clo', regionSlug: 'nyc', loc: 'Brooklyn — Greenpoint',
+      price: 95, catSlug: 'clo', regionSlug: 'new-york-city', loc: 'Brooklyn — Greenpoint',
       email: EMAILS[6], name: 'Theo', imgs: [img('bag')!].filter(Boolean), daysAgo: 6,
     },
     {
@@ -242,13 +264,13 @@ async function main(prisma: PrismaClient) {
     {
       title: 'Martin DX1AE acoustic guitar with hard case',
       desc: 'Martin DX1AE dreadnought, solid spruce top with HPL back/sides. Warm, punchy tone — sounds bigger than it looks. Setup is low and comfortable. Includes a fitted hardshell case and a strap. One tiny finish ding on the lower bout (photographed). Great gig or couch guitar.',
-      price: 460, catSlug: 'mus', regionSlug: 'nyc', loc: 'Astoria, Queens',
+      price: 460, catSlug: 'mus', regionSlug: 'new-york-city', loc: 'Astoria, Queens',
       email: EMAILS[11], name: 'E. Saltzman', imgs: [img('guitar')!].filter(Boolean), daysAgo: 4,
     },
     {
       title: 'Frontend Engineer (React/TypeScript) — remote-friendly',
       desc: 'Small product team (12 people) looking for a senior frontend engineer. We build internal tooling for a logistics company. Stack: React, TypeScript, Node, Postgres. You\'d own a meaningful chunk of the UI. Remote OK but NYC/Boston preferred for quarterly offsites. Competitive salary, real equity, sane hours.',
-      price: null, priceLabel: '', catSlug: 'sof', regionSlug: 'nyc', loc: 'Remote (NYC preferred)',
+      price: null, priceLabel: '', catSlug: 'sof', regionSlug: 'new-york-city', loc: 'Remote (NYC preferred)',
       email: 'hiring@northboundtool.example.com', name: 'Northbound', daysAgo: 2,
     },
     {
