@@ -12,7 +12,7 @@ import { api } from '@/lib/api'
 import { useNav } from '@/store/nav'
 import { formatPrice } from '@/lib/types'
 import {
-  getStoredTokens, getTokenStrings, parseManageInput, addToken, removeStoredToken,
+ getTokenStrings, parseManageInput, addToken, removeStoredToken,
 } from '@/lib/tokens'
 
 function expiresIn(iso: string): string {

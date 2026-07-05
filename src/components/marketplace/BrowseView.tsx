@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { List, Map as MapIcon, X, SlidersHorizontal } from 'lucide-react'
+import { List, Map as MapIcon, SlidersHorizontal } from 'lucide-react'
 import { api } from '@/lib/api'
 import { useNav } from '@/store/nav'
 import { ListingRow } from './ListingRow'

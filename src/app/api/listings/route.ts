@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { Prisma } from '@prisma/client'
-import { ensureBooted } from '@/lib/ensure-seeded'
 import { withDbErrorHandler } from '@/lib/api-error'
 
 export const dynamic = 'force-dynamic'
 
 export const GET = withDbErrorHandler(async (req: NextRequest) => {
-  await ensureBooted()
   const { searchParams } = new URL(req.url)
   const regionId = searchParams.get('regionId')
   const category = searchParams.get('category') // slug
@@ -27,7 +25,7 @@ export const GET = withDbErrorHandler(async (req: NextRequest) => {
   if (regionId) where.regionId = regionId
 
   if (category || subcategory) {
-    const slug = subcategory || category
+    const slug = (subcategory || category) as string
     const cat = await db.category.findUnique({ where: { slug } })
     if (cat) {
       // if it's a parent, include all children

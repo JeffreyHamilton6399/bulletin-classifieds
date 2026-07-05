@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowLeft, Sun, Moon, Monitor, Check } from 'lucide-react'
+import { ArrowLeft, Sun, Moon, Check } from 'lucide-react'
 import { useNav } from '@/store/nav'
 import { cn } from '@/lib/utils'
 
@@ -92,7 +92,7 @@ export function SettingsView() {
           <div className="flex justify-between gap-4 border-b hairline pb-2">
             <dt className="text-muted-foreground">Data</dt>
             <dd className="font-mono text-xs text-right">
-              {process.env.VERCEL ? 'Serverless (resets per cold start)' : 'Local SQLite'}
+              {process.env.VERCEL ? 'Supabase Postgres (persistent)' : 'Local Postgres'}
             </dd>
           </div>
         </dl>

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
-import { ensureBooted } from '@/lib/ensure-seeded'
 import { withDbErrorHandler } from '@/lib/api-error'
 
 export const dynamic = 'force-dynamic'
@@ -12,7 +11,6 @@ export const GET = withDbErrorHandler(async (
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) => {
-  await ensureBooted()
   const { id } = await params
   const listing = await db.listing.findUnique({
     where: { id },
@@ -35,11 +33,10 @@ export const GET = withDbErrorHandler(async (
 // Renew or delete a listing. Auth via per-listing editToken (the poster's
 // secret management key) — no account or password required, and no one can
 // manage a listing without holding its token.
-export async function PATCH(
+export const PATCH = withDbErrorHandler(async (
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
-) {
-  await ensureBooted()
+) => {
   const { id } = await params
   let body: any
   try {
@@ -72,4 +69,4 @@ export async function PATCH(
     return NextResponse.json({ ok: true })
   }
   return NextResponse.json({ error: 'Unknown action' }, { status: 400 })
-}
+})

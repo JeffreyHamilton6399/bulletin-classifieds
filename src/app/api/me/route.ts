@@ -1,19 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
-import { ensureBooted } from '@/lib/ensure-seeded'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
+import { withDbErrorHandler } from '@/lib/api-error'
 
 export const dynamic = 'force-dynamic'
 
-// PATCH own profile (bio + name)
-export async function PATCH(req: NextRequest) {
-  await ensureBooted()
+export const PATCH = withDbErrorHandler(async (req: NextRequest) => {
   const session = await getServerSession(authOptions)
   if (!session?.user?.id) {
     return NextResponse.json({ error: 'Sign in required' }, { status: 401 })
   }
-  // Guard against ghost sessions (user deleted by a DB reset on serverless)
   const exists = await db.user.findUnique({ where: { id: session.user.id }, select: { id: true } })
   if (!exists) {
     return NextResponse.json({ error: 'Session expired — please sign in again' }, { status: 401 })
@@ -33,49 +30,32 @@ export async function PATCH(req: NextRequest) {
     select: { id: true, name: true, bio: true, avatarColor: true, email: true },
   })
   return NextResponse.json(updated)
-}
+})
 
-// GET the logged-in user's full profile + all their listings (any status)
-export async function GET() {
-  await ensureBooted()
+export const GET = withDbErrorHandler(async () => {
   const session = await getServerSession(authOptions)
   if (!session?.user?.id) {
     return NextResponse.json({ error: 'Sign in required' }, { status: 401 })
   }
   const user = await db.user.findUnique({
     where: { id: session.user.id },
-    select: {
-      id: true, email: true, name: true, bio: true, avatarColor: true, createdAt: true,
-    },
+    select: { id: true, email: true, name: true, bio: true, avatarColor: true, createdAt: true },
   })
-  // Ghost session: the JWT points to a user that no longer exists (DB reset)
   if (!user) {
     return NextResponse.json({ error: 'Session expired — please sign in again' }, { status: 401 })
   }
   const listings = await db.listing.findMany({
     where: { userId: session.user.id },
     orderBy: { createdAt: 'desc' },
-    include: {
-      images: { orderBy: { position: 'asc' }, take: 1 },
-      category: true,
-      region: true,
-    },
+    include: { images: { orderBy: { position: 'asc' }, take: 1 }, category: true, region: true },
     take: 100,
   })
   const out = listings.map((l) => ({
-    id: l.id,
-    title: l.title,
-    price: l.price,
-    priceLabel: l.priceLabel,
-    locationName: l.locationName,
-    status: l.status,
-    createdAt: l.createdAt,
-    expiresAt: l.expiresAt,
-    viewCount: l.viewCount,
-    editToken: l.editToken,
-    _categoryName: l.category.name,
-    _regionName: l.region?.name ?? null,
+    id: l.id, title: l.title, price: l.price, priceLabel: l.priceLabel,
+    locationName: l.locationName, status: l.status, createdAt: l.createdAt,
+    expiresAt: l.expiresAt, viewCount: l.viewCount, editToken: l.editToken,
+    _categoryName: l.category.name, _regionName: l.region?.name ?? null,
     _thumb: l.images[0]?.url ?? null,
   }))
   return NextResponse.json({ user, listings: out })
-}
+})

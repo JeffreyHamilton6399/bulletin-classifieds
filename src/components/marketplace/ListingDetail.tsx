@@ -98,7 +98,7 @@ export function ListingDetail({ id }: { id: string }) {
         {/* Sidebar / details */}
         <div className="lg:border-l hairline lg:pl-8">
           <div className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground flex items-center gap-2">
-            <span>{listing.category?.parent ? `${listing.category.parent.name} / ` : ''}{listing.category?.name}</span>
+            <span>{listing.category?.parentId ? `${listing.category.name} / ` : ''}{listing.category?.name}</span>
             <span className="opacity-40">·</span>
             <span>{relativeTime(listing.createdAt)}</span>
           </div>

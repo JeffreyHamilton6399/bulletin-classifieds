@@ -1,17 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
-import { Prisma } from '@prisma/client'
-import { ensureBooted } from '@/lib/ensure-seeded'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
+import { withDbErrorHandler } from '@/lib/api-error'
 import crypto from 'crypto'
 
 export const dynamic = 'force-dynamic'
 
 const EXPIRY_DAYS = 30
 
-export async function POST(req: NextRequest) {
-  await ensureBooted()
+export const POST = withDbErrorHandler(async (req: NextRequest) => {
   const session = await getServerSession(authOptions)
   let body: any
   try {
@@ -126,9 +124,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(listing, { status: 201 })
   } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      return NextResponse.json({ error: 'Database error: ' + e.message }, { status: 500 })
-    }
+    // re-throw — withDbErrorHandler catches and formats it
     throw e
   }
-}
+})

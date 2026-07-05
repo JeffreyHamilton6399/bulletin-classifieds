@@ -1,7 +1,6 @@
 import type { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { db } from './db'
-import { ensureBooted } from './ensure-seeded'
 import crypto from 'crypto'
 
 // --- Password hashing with Node's built-in scrypt (no dependencies) ---
@@ -45,7 +44,6 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        await ensureBooted()
         if (!credentials?.email || !credentials?.password) return null
         const email = credentials.email.trim().toLowerCase()
         const user = await db.user.findUnique({ where: { email } })

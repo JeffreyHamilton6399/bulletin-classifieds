@@ -1,14 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
-import { ensureBooted } from '@/lib/ensure-seeded'
+import { withDbErrorHandler } from '@/lib/api-error'
 
 export const dynamic = 'force-dynamic'
 
-export async function POST(
+export const POST = withDbErrorHandler(async (
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
-) {
-  await ensureBooted()
+) => {
   const { id } = await params
   let body: any
   try {
@@ -31,7 +30,6 @@ export async function POST(
   const listing = await db.listing.findUnique({ where: { id } })
   if (!listing) return NextResponse.json({ error: 'Not found' }, { status: 404 })
 
-  // rate limit: 3 messages per email per hour
   const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000)
   const recent = await db.message.count({
     where: { fromEmail, createdAt: { gt: oneHourAgo } },
@@ -49,4 +47,4 @@ export async function POST(
     },
   })
   return NextResponse.json(msg, { status: 201 })
-}
+})

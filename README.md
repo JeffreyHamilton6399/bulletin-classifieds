@@ -64,7 +64,7 @@ cp .env.example .env
 ```
 
 ```env
-DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@db.YOUR_REF.supabase.co:5432/postgres
+DATABASE_URL=postgresql://postgres.YOUR_REF:YOUR_PASSWORD@aws-0-YOUR_REGION.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1
 NEXT_PUBLIC_SUPABASE_URL=https://YOUR_REF.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 NEXTAUTH_SECRET=run: openssl rand -hex 32

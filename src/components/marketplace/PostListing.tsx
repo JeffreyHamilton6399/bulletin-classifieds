@@ -86,7 +86,7 @@ export function PostListing() {
       // Save the management token to this browser so "Your listings" can find it.
       storeListingToken({
         id: created.id,
-        token: created.editToken,
+        token: created.editToken!,
         title: created.title,
         postedAt: created.createdAt,
       })

@@ -1,0 +1,252 @@
+/home/z/my-project/worklog.md:145:  Fix: scripts/ensure-env.js writes a fallback DATABASE_URL=file:/tmp/bulletin-build.db
+/home/z/my-project/skills/web-shader-extractor/SKILL.md:55:node ~/.claude/skills/web-shader-extractor/scripts/fetch-rendered-dom.mjs '<URL>'
+/home/z/my-project/skills/web-shader-extractor/SKILL.md:81:扫描确认：bash scripts/scan-bundle.sh /tmp/*.js
+/home/z/my-project/skills/design/design-systems/brand-inspiration/uber/DESIGN.md:586:> Auto-derived kit-mirror demonstration surfaces (`scripts/derive-examples-block.mjs`). Each `ex-*` entry references brand-native primitives so downstream consumers (`/preview-design`, `/generate-kit`) re-skin the same 10 surfaces consistently. `TO_FILL` markers indicate missing primitives — resolve in the LLM judgment pass.
+/home/z/my-project/skills/design/design-systems/brand-inspiration/vercel/DESIGN.md:685:> Auto-derived kit-mirror demonstration surfaces (`scripts/derive-examples-block.mjs`). Each `ex-*` entry references brand-native primitives so downstream consumers (`/preview-design`, `/generate-kit`) re-skin the same 10 surfaces consistently. `TO_FILL` markers indicate missing primitives — resolve in the LLM judgment pass.
+/home/z/my-project/skills/design/design-systems/brand-inspiration/warp/DESIGN.md:479:> Auto-derived kit-mirror demonstration surfaces (`scripts/derive-examples-block.mjs`). Each `ex-*` entry references brand-native primitives so downstream consumers (`/preview-design`, `/generate-kit`) re-skin the same 10 surfaces consistently. `TO_FILL` markers indicate missing primitives — resolve in the LLM judgment pass.
+/home/z/my-project/skills/design/design-systems/brand-inspiration/together.ai/DESIGN.md:583:> Auto-derived kit-mirror demonstration surfaces (`scripts/derive-examples-block.mjs`). Each `ex-*` entry references brand-native primitives so downstream consumers (`/preview-design`, `/generate-kit`) re-skin the same 10 surfaces consistently. `TO_FILL` markers indicate missing primitives — resolve in the LLM judgment pass.
+/home/z/my-project/skills/design/design-systems/brand-inspiration/webflow/DESIGN.md:541:> Auto-derived kit-mirror demonstration surfaces (`scripts/derive-examples-block.mjs`). Each `ex-*` entry references brand-native primitives so downstream consumers (`/preview-design`, `/generate-kit`) re-skin the same 10 surfaces consistently. `TO_FILL` markers indicate missing primitives — resolve in the LLM judgment pass.
+/home/z/my-project/skills/design/design-systems/brand-inspiration/wise/DESIGN.md:497:> Auto-derived kit-mirror demonstration surfaces (`scripts/derive-examples-block.mjs`). Each `ex-*` entry references brand-native primitives so downstream consumers (`/preview-design`, `/generate-kit`) re-skin the same 10 surfaces consistently. `TO_FILL` markers indicate missing primitives — resolve in the LLM judgment pass.
+/home/z/my-project/skills/design/design-systems/brand-inspiration/vodafone/DESIGN.md:489:> Auto-derived kit-mirror demonstration surfaces (`scripts/derive-examples-block.mjs`). Each `ex-*` entry references brand-native primitives so downstream consumers (`/preview-design`, `/generate-kit`) re-skin the same 10 surfaces consistently. `TO_FILL` markers indicate missing primitives — resolve in the LLM judgment pass.
+/home/z/my-project/skills/design/design-systems/brand-inspiration/wired/DESIGN.md:450:> Auto-derived kit-mirror demonstration surfaces (`scripts/derive-examples-block.mjs`). Each `ex-*` entry references brand-native primitives so downstream consumers (`/preview-design`, `/generate-kit`) re-skin the same 10 surfaces consistently. `TO_FILL` markers indicate missing primitives — resolve in the LLM judgment pass.
+/home/z/my-project/skills/design/design-systems/brand-inspiration/x.ai/DESIGN.md:418:> Auto-derived kit-mirror demonstration surfaces (`scripts/derive-examples-block.mjs`). Each `ex-*` entry references brand-native primitives so downstream consumers (`/preview-design`, `/generate-kit`) re-skin the same 10 surfaces consistently. `TO_FILL` markers indicate missing primitives — resolve in the LLM judgment pass.
+/home/z/my-project/skills/design/design-systems/brand-inspiration/zapier/DESIGN.md:489:> Auto-derived kit-mirror demonstration surfaces (`scripts/derive-examples-block.mjs`). Each `ex-*` entry references brand-native primitives so downstream consumers (`/preview-design`, `/generate-kit`) re-skin the same 10 surfaces consistently. `TO_FILL` markers indicate missing primitives — resolve in the LLM judgment pass.
+/home/z/my-project/skills/design/design-systems/brand-inspiration/voltagent/DESIGN.md:474:> Auto-derived kit-mirror demonstration surfaces (`scripts/derive-examples-block.mjs`). Each `ex-*` entry references brand-native primitives so downstream consumers (`/preview-design`, `/generate-kit`) re-skin the same 10 surfaces consistently. `TO_FILL` markers indicate missing primitives — resolve in the LLM judgment pass.
+/home/z/my-project/skills/skill-creator/SKILL.md:81:    ├── scripts/    - Executable code for deterministic/repetitive tasks
+/home/z/my-project/skills/skill-creator/SKILL.md:304:4. **Look for repeated work across test cases.** Read the transcripts from the test runs and notice if the subagents all independently wrote similar helper scripts or took the same multi-step approach to something. If all 3 test cases resulted in the subagent writing a `create_docx.py` or a `build_chart.py`, that's a strong signal the skill should bundle that script. Write it once, put it in `scripts/`, and tell the skill to use it. This saves every future invocation from reinventing the wheel.
+/home/z/my-project/skills/skill-creator/agents/analyzer.md:63:- Better scripts/tools that produced better output?
+/home/z/my-project/skills/VLM/SKILL.md:17:**Reference Scripts**: Example test scripts are available in the `{Skill Location}/scripts/` directory for quick testing and reference. See `{Skill Location}/scripts/vlm.ts` for a working example.
+/home/z/my-project/skills/quiz-html/README.md:29:python3 scripts/build_quiz_html.py /tmp/q.json --title "数学练习" --open
+/home/z/my-project/skills/quiz-html/README.md:39:├── scripts/
+/home/z/my-project/skills/quiz-html/SKILL.md:39:python3 scripts/build_quiz_html.py <题目JSON文件> [--title "..." --open]
+/home/z/my-project/skills/quiz-html/SKILL.md:59:   python3 ~/Desktop/studybuddy_4.0/skills/quiz-html/scripts/build_quiz_html.py \
+/home/z/my-project/skills/quiz-html/SKILL.md:161:    str(Path.home() / "Desktop/studybuddy_4.0/skills/quiz-html/scripts/build_quiz_html.py"),
+/home/z/my-project/skills/quiz-html/skill.yaml:6:  build: scripts/build_quiz_html.py
+/home/z/my-project/skills/gaokao-generate-report/SKILL.md:33:python3 scripts/merge_analysis.py \
+/home/z/my-project/skills/gaokao-generate-report/SKILL.md:44:python3 scripts/generate_html.py \
+/home/z/my-project/skills/storyboard-manager/SKILL.md:303:python3 .claude/skills/storyboard-manager/scripts/timeline_tracker.py . --output markdown
+/home/z/my-project/skills/storyboard-manager/SKILL.md:363:python3 .claude/skills/storyboard-manager/scripts/consistency_checker.py . --output markdown
+/home/z/my-project/skills/storyboard-manager/SKILL.md:514:### scripts/timeline_tracker.py
+/home/z/my-project/skills/storyboard-manager/SKILL.md:517:**Usage:** Run from project root with `python3 .claude/skills/storyboard-manager/scripts/timeline_tracker.py .`
+/home/z/my-project/skills/storyboard-manager/SKILL.md:519:### scripts/consistency_checker.py
+/home/z/my-project/skills/storyboard-manager/SKILL.md:522:**Usage:** Run from project root with `python3 .claude/skills/storyboard-manager/scripts/consistency_checker.py .`
+/home/z/my-project/skills/video-understand/SKILL.md:17:**Reference Scripts**: Example test scripts are available in the `{Skill Location}/scripts/` directory for quick testing and reference. See `{Skill Location}/scripts/video-understand.ts` for a working example.
+/home/z/my-project/skills/aminer-daily-paper/README.md:24:python3 scripts/recommend.py --topic "RAG" --topic "multimodal" --size 5 --language-sort zh
+/home/z/my-project/skills/aminer-daily-paper/SKILL.md:3:description: "Get personalized academic paper recommendations. Activate whenever the user asks for paper recommendations — explicit command (/aminer-dp) or natural language (e.g. 'recommend me papers on RAG', 'suggest recent papers on multimodal agents'). Workflow: extract topics / author / aminer_author_id from the input, invoke scripts/recommend.py, return results as Markdown."
+/home/z/my-project/skills/aminer-daily-paper/SKILL.md:52:python3 "{baseDir}/scripts/recommend.py" \
+/home/z/my-project/skills/pdf/env_setup/env_check.sh:33:if [ -x "$PDF_SKILL_DIR/scripts/tectonic" ]; then
+/home/z/my-project/skills/pdf/env_setup/setup_mac_linux.sh:217:BUNDLED="$PDF_SKILL_DIR/scripts/tectonic"
+/home/z/my-project/skills/pdf/SKILL.md:355:python3 "$PDF_SKILL_DIR/scripts/pdf.py" convert.blueprint diagram.html --device-scale-factor 2 --output diagram.png
+/home/z/my-project/skills/pdf/SKILL.md:414:node "$PDF_SKILL_DIR/scripts/html2poster.js" poster.html --output poster.pdf --width 720px
+/home/z/my-project/skills/pdf/SKILL.md:429:node "$PDF_SKILL_DIR/scripts/html2pdf-next.js" input.html --output output.pdf --width 210mm --height 297mm
+/home/z/my-project/skills/pdf/SKILL.md:431:python3 "$PDF_SKILL_DIR/scripts/pdf.py" convert.html input.html --output output.pdf
+/home/z/my-project/skills/pdf/SKILL.md:561:python3 "$PDF_SKILL_DIR/scripts/poster_validate.py" check-html <your_file>.html
+/home/z/my-project/skills/pdf/SKILL.md:643:### CLI: `python3 "$PDF_SKILL_DIR/scripts/pdf.py" <command>`
+/home/z/my-project/skills/pdf/SKILL.md:677:### Poster/HTML/LaTeX Validator: `python3 "$PDF_SKILL_DIR/scripts/poster_validate.py"`
+/home/z/my-project/skills/pdf/SKILL.md:713:### Design Engine: `python3 "$PDF_SKILL_DIR/scripts/design_engine.py"`
+/home/z/my-project/skills/pdf/SKILL.md:724:### Palette Generator (for Report route): `python3 "$PDF_SKILL_DIR/scripts/pdf.py" palette.generate`
+/home/z/my-project/skills/pdf/SKILL.md:732:### Cascade Palette (V2 - Preferred): `python3 "$PDF_SKILL_DIR/scripts/pdf.py" palette.cascade`
+/home/z/my-project/skills/pdf/SKILL.md:786:scripts/
+/home/z/my-project/skills/pdf/SKILL.md:838:python3 "$PDF_SKILL_DIR/scripts/pdf_qa.py" <output.pdf>
+/home/z/my-project/skills/pdf/SKILL.md:839:python3 "$PDF_SKILL_DIR/scripts/pdf_qa.py" --poster <output.pdf>   # poster mode: skip content fill ratio, check all pages for full-bleed
+/home/z/my-project/skills/pdf/SKILL.md:840:python3 "$PDF_SKILL_DIR/scripts/pdf_qa.py" --skip-cover --formulas <output.pdf>   # academic mode: skip cover for margin check, enable formula overflow
+/home/z/my-project/skills/pdf/SKILL.md:841:python3 "$PDF_SKILL_DIR/scripts/pdf_qa.py" --no-tables <output.pdf>   # creative mode: skip table centering check
+/home/z/my-project/skills/pdf/SKILL.md:848:node "$PDF_SKILL_DIR/scripts/cover_validate.js" cover.html
+/home/z/my-project/skills/pdf/SKILL.md:849:node "$PDF_SKILL_DIR/scripts/cover_validate.js" cover.html --min-gap 30   # custom min gap in px
+/home/z/my-project/skills/pdf/typesetting/cover.md:306:node "$PDF_SKILL_DIR/scripts/cover_validate.js" cover.html
+/home/z/my-project/skills/pdf/typesetting/palette.md:55:python3 "$PDF_SKILL_DIR/scripts/design_engine.py" palette-cascade --intent cold --mode minimal
+/home/z/my-project/skills/pdf/typesetting/palette.md:58:python3 "$PDF_SKILL_DIR/scripts/pdf.py" palette.cascade --title "2025年度报告" --format reportlab
+/home/z/my-project/skills/pdf/briefs/poster.md:488:node "$PDF_SKILL_DIR/scripts/html2poster.js" poster.html --output poster.pdf --width 720px
+/home/z/my-project/skills/pdf/briefs/poster.md:582:node "$PDF_SKILL_DIR/scripts/html2poster.js" poster.html --output poster.pdf --width 720px
+/home/z/my-project/skills/pdf/briefs/process.md:30:python3 "$PDF_SKILL_DIR/scripts/pdf.py" env.check
+/home/z/my-project/skills/pdf/briefs/process.md:35:Entry point: `python3 "$PDF_SKILL_DIR/scripts/pdf.py" <group>.<action> [options]`
+/home/z/my-project/skills/pdf/briefs/process.md:48:python3 "$PDF_SKILL_DIR/scripts/pdf.py" extract.text report.pdf
+/home/z/my-project/skills/pdf/briefs/process.md:49:python3 "$PDF_SKILL_DIR/scripts/pdf.py" extract.text report.pdf -p 1-3
+/home/z/my-project/skills/pdf/briefs/process.md:50:python3 "$PDF_SKILL_DIR/scripts/pdf.py" extract.text report.pdf -p 1,4,7
+/home/z/my-project/skills/pdf/briefs/process.md:53:python3 "$PDF_SKILL_DIR/scripts/pdf.py" extract.table report.pdf
+/home/z/my-project/skills/pdf/briefs/process.md:56:python3 "$PDF_SKILL_DIR/scripts/pdf.py" extract.image report.pdf -o ./images/
+/home/z/my-project/skills/pdf/briefs/process.md:148:python3 "$PDF_SKILL_DIR/scripts/pdf.py" pages.merge a.pdf b.pdf -o combined.pdf
+/home/z/my-project/skills/pdf/briefs/process.md:149:python3 "$PDF_SKILL_DIR/scripts/pdf.py" pages.split book.pdf -o ./chapters/
+/home/z/my-project/skills/pdf/briefs/process.md:150:python3 "$PDF_SKILL_DIR/scripts/pdf.py" pages.rotate doc.pdf 90 -o rotated.pdf
+/home/z/my-project/skills/pdf/briefs/process.md:151:python3 "$PDF_SKILL_DIR/scripts/pdf.py" pages.rotate doc.pdf 180 -o rotated.pdf -p 1-3
+/home/z/my-project/skills/pdf/briefs/process.md:152:python3 "$PDF_SKILL_DIR/scripts/pdf.py" pages.crop doc.pdf 50,50,550,750 -o trimmed.pdf
+/home/z/my-project/skills/pdf/briefs/process.md:153:python3 "$PDF_SKILL_DIR/scripts/pdf.py" pages.clean doc.pdf -o cleaned.pdf
+/home/z/my-project/skills/pdf/briefs/process.md:174:python3 "$PDF_SKILL_DIR/scripts/pdf.py" meta.get doc.pdf
+/home/z/my-project/skills/pdf/briefs/process.md:175:python3 "$PDF_SKILL_DIR/scripts/pdf.py" meta.set doc.pdf -o out.pdf -d '{"Title": "Report", "Author": "Jane"}'
+/home/z/my-project/skills/pdf/briefs/process.md:176:python3 "$PDF_SKILL_DIR/scripts/pdf.py" meta.brand doc.pdf -o branded.pdf
+/home/z/my-project/skills/pdf/briefs/process.md:188:python3 "$PDF_SKILL_DIR/scripts/pdf.py" form.info input.pdf
+/home/z/my-project/skills/pdf/briefs/process.md:196:python3 "$PDF_SKILL_DIR/scripts/pdf.py" form.fill input.pdf -o filled.pdf \
+/home/z/my-project/skills/pdf/briefs/process.md:215:python3 "$PDF_SKILL_DIR/scripts/pdf.py" form.render input.pdf -o ./pages/
+/home/z/my-project/skills/pdf/briefs/process.md:236:python3 "$PDF_SKILL_DIR/scripts/pdf.py" form.check-bbox fields.json
+/home/z/my-project/skills/pdf/briefs/process.md:237:python3 "$PDF_SKILL_DIR/scripts/pdf.py" form.validate 1 fields.json page1.png validation.png
+/home/z/my-project/skills/pdf/briefs/process.md:242:python3 "$PDF_SKILL_DIR/scripts/pdf.py" form.annotate input.pdf fields.json -o filled.pdf
+/home/z/my-project/skills/pdf/briefs/process.md:325:python3 "$PDF_SKILL_DIR/scripts/pdf.py" convert.office input.docx -o output.pdf
+/home/z/my-project/skills/pdf/briefs/process.md:353:python3 "$PDF_SKILL_DIR/scripts/pdf.py" convert.office input.docx -o pass1.pdf
+/home/z/my-project/skills/pdf/briefs/process.md:356:python3 "$PDF_SKILL_DIR/scripts/pdf.py" pages.clean pass1.pdf -o pass1_clean.pdf
+/home/z/my-project/skills/pdf/briefs/process.md:359:python3 "$PDF_SKILL_DIR/scripts/toc_validate.py" fix-docx input.docx -o fixed.docx
+/home/z/my-project/skills/pdf/briefs/process.md:362:python3 "$PDF_SKILL_DIR/scripts/toc_validate.py" fix-pages fixed.docx pass1_clean.pdf -o final.docx
+/home/z/my-project/skills/pdf/briefs/process.md:365:python3 "$PDF_SKILL_DIR/scripts/pdf.py" convert.office final.docx -o output.pdf
+/home/z/my-project/skills/pdf/briefs/process.md:366:python3 "$PDF_SKILL_DIR/scripts/pdf.py" pages.clean output.pdf -o output_clean.pdf
+/home/z/my-project/skills/pdf/briefs/creative-flow.md:18:node "$PDF_SKILL_DIR/scripts/html2pdf-next.js" input.html --output output.pdf --width 720px --height 1020px
+/home/z/my-project/skills/pdf/briefs/creative-flow.md:211:python3 "$PDF_SKILL_DIR/scripts/poster_validate.py" check-html <file>.html
+/home/z/my-project/skills/pdf/briefs/creative-fixed-canvas.md:657:    python3 "$PDF_SKILL_DIR/scripts/poster_validate.py" check-html page.html
+/home/z/my-project/skills/pdf/briefs/creative-fixed-canvas.md:659:    python3 "$PDF_SKILL_DIR/scripts/poster_validate.py" check-html page.html --fix --output page.html
+/home/z/my-project/skills/pdf/briefs/creative-fixed-canvas.md:665:    python3 "$PDF_SKILL_DIR/scripts/pdf_qa.py" output.pdf --no-tables
+/home/z/my-project/skills/pdf/briefs/creative-fixed-canvas.md:668:    python3 "$PDF_SKILL_DIR/scripts/pdf.py" meta.brand output.pdf
+/home/z/my-project/skills/pdf/briefs/creative-fixed-canvas.md:682:node "$PDF_SKILL_DIR/scripts/html2pdf-next.js" input.html --output output.pdf --width 210mm --height 297mm
+/home/z/my-project/skills/pdf/briefs/creative-fixed-canvas.md:804:   python3 "$PDF_SKILL_DIR/scripts/poster_validate.py" check-html <your_file>.html
+/home/z/my-project/skills/pdf/briefs/creative.md:651:    python3 "$PDF_SKILL_DIR/scripts/poster_validate.py" check-html page.html
+/home/z/my-project/skills/pdf/briefs/creative.md:653:    python3 "$PDF_SKILL_DIR/scripts/poster_validate.py" check-html page.html --fix --output page.html
+/home/z/my-project/skills/pdf/briefs/creative.md:659:    python3 "$PDF_SKILL_DIR/scripts/pdf_qa.py" output.pdf --no-tables
+/home/z/my-project/skills/pdf/briefs/creative.md:662:    python3 "$PDF_SKILL_DIR/scripts/pdf.py" meta.brand output.pdf
+/home/z/my-project/skills/pdf/briefs/creative.md:676:node "$PDF_SKILL_DIR/scripts/html2pdf-next.js" input.html --output output.pdf --width 210mm --height 297mm
+/home/z/my-project/skills/pdf/briefs/creative.md:766:   python3 "$PDF_SKILL_DIR/scripts/poster_validate.py" check-html <your_file>.html
+/home/z/my-project/skills/pdf/briefs/resume.md:71:# Run: python3 "$PDF_SKILL_DIR/scripts/pdf.py" palette.generate --title "Resume" --mode minimal
+/home/z/my-project/skills/pdf/briefs/academic.md:75:node "$PDF_SKILL_DIR/scripts/html2poster.js" cover.html --output cover.pdf --width 794px
+/home/z/my-project/skills/pdf/briefs/academic.md:349:| Long subscripts/superscripts with `\text{}` | `\text{collab}`, `\text{social}` are wide | Use short math abbreviations: `c`, `s`, or define `\newcommand` |
+/home/z/my-project/skills/pdf/briefs/academic.md:484:python3 "$PDF_SKILL_DIR/scripts/pdf.py" convert.latex main.tex --runs 2
+/home/z/my-project/skills/pdf/briefs/academic.md:631:python3 "$PDF_SKILL_DIR/scripts/pdf.py" convert.latex diagram.tex    # → diagram.pdf (tight-cropped)
+/home/z/my-project/skills/pdf/briefs/academic.md:650:python3 "$PDF_SKILL_DIR/scripts/pdf.py" convert.blueprint diagram.html --device-scale-factor 2 --output diagram.png
+/home/z/my-project/skills/pdf/briefs/academic.md:907:3. Compile: `python3 "$PDF_SKILL_DIR/scripts/pdf.py" convert.latex resume.tex --runs 2`
+/home/z/my-project/skills/pdf/briefs/academic.md:995:**Bundled binary note:** The `scripts/tectonic` binary shipped with this skill is a **macOS arm64 (Apple Silicon)** executable. It will NOT work on other platforms. If `pdf.py convert.latex` reports "tectonic command not found", run `python3 pdf.py status` to see platform-specific installation instructions, or install manually:
+/home/z/my-project/skills/pdf/briefs/academic.md:1007:After installing, verify: `tectonic --version`. The `_find_tectonic()` function searches: `scripts/tectonic` → `~/tectonic` → system PATH.
+/home/z/my-project/skills/pdf/briefs/academic.md:1020:python3 "$PDF_SKILL_DIR/scripts/poster_validate.py" check-html cover.html
+/home/z/my-project/skills/pdf/briefs/academic.md:1022:node "$PDF_SKILL_DIR/scripts/cover_validate.js" cover.html
+/home/z/my-project/skills/pdf/briefs/academic.md:1024:node "$PDF_SKILL_DIR/scripts/html2poster.js" cover.html --output cover.pdf --width 794px
+/home/z/my-project/skills/pdf/briefs/academic.md:1026:python3 "$PDF_SKILL_DIR/scripts/pdf_qa.py" final.pdf --skip-cover --formulas
+/home/z/my-project/skills/pdf/briefs/academic.md:1029:python3 "$PDF_SKILL_DIR/scripts/pdf.py" meta.brand final.pdf
+/home/z/my-project/skills/pdf/briefs/academic.md:1030:python3 "$PDF_SKILL_DIR/scripts/pdf.py" pages.clean final.pdf -o final_clean.pdf
+/home/z/my-project/skills/pdf/briefs/academic.md:1031:python3 "$PDF_SKILL_DIR/scripts/pdf.py" font.check final.pdf
+/home/z/my-project/skills/pdf/briefs/academic.md:1032:python3 "$PDF_SKILL_DIR/scripts/pdf.py" toc.check final.pdf
+/home/z/my-project/skills/pdf/briefs/report.md:132:python3 "$PDF_SKILL_DIR/scripts/pdf.py" palette.cascade --title "<document title>" --mode minimal --format reportlab
+/home/z/my-project/skills/pdf/briefs/report.md:605:   node "$PDF_SKILL_DIR/scripts/cover_validate.js" cover.html
+/home/z/my-project/skills/pdf/briefs/report.md:664:node "$PDF_SKILL_DIR/scripts/html2poster.js" cover.html --output cover.pdf --width 794px
+/home/z/my-project/skills/pdf/briefs/report.md:1168:python3 "$PDF_SKILL_DIR/scripts/toc_validate.py" check-pdf output.pdf
+/home/z/my-project/skills/pdf/briefs/report.md:1302:python3 "$PDF_SKILL_DIR/scripts/pdf.py" meta.brand output.pdf
+/home/z/my-project/skills/pdf/briefs/report.md:1309:python3 "$PDF_SKILL_DIR/scripts/pdf.py" pages.clean output.pdf -o output_clean.pdf
+/home/z/my-project/skills/pdf/briefs/report.md:1329:python3 "$PDF_SKILL_DIR/scripts/pdf.py" code.sanitize generate_pdf.py
+/home/z/my-project/skills/pdf/briefs/report.md:1335:python3 "$PDF_SKILL_DIR/scripts/pdf.py" meta.brand output.pdf
+/home/z/my-project/skills/pdf/briefs/report.md:1338:python3 "$PDF_SKILL_DIR/scripts/pdf.py" font.check output.pdf
+/home/z/my-project/skills/pdf/briefs/report.md:1341:python3 "$PDF_SKILL_DIR/scripts/pdf.py" toc.check output.pdf
+/home/z/my-project/skills/pdf/briefs/report.md:1344:python3 "$PDF_SKILL_DIR/scripts/pdf_qa.py" output.pdf
+/home/z/my-project/skills/pdf/briefs/report.md:1426:| Fill PDF forms | Process brief | `python3 "$PDF_SKILL_DIR/scripts/pdf.py" form.fill` or annotation workflow |
+/home/z/my-project/skills/pdf/briefs/report.md:1427:| Merge PDFs | Process brief | `python3 "$PDF_SKILL_DIR/scripts/pdf.py" pages.merge` |
+/home/z/my-project/skills/pdf/briefs/report.md:1428:| Extract text | Process brief | `python3 "$PDF_SKILL_DIR/scripts/pdf.py" extract.text` |
+/home/z/my-project/skills/pdf/briefs/report.md:1429:| Extract tables | Process brief | `python3 "$PDF_SKILL_DIR/scripts/pdf.py" extract.table` |
+/home/z/my-project/skills/pdf/briefs/report.md:1476:4. Run `python3 "$PDF_SKILL_DIR/scripts/toc_validate.py" output.pdf` to verify TOC links
+/home/z/my-project/skills/pdf/scripts/pdf.py:1802:      1. scripts/ dir  (bundled binary — macOS arm64 only)
+/home/z/my-project/skills/pdf/scripts/pdf.py:1806:    NOTE: The bundled binary at scripts/tectonic is a macOS arm64 (Apple
+/home/z/my-project/skills/pdf/scripts/pdf.py:2011:        print("The bundled scripts/tectonic binary is macOS arm64 only.")
+/home/z/my-project/skills/pdf/scripts/pdf.py:2034:        print(f"  scripts/tectonic:  {'exists' if (_SCRIPT_DIR / 'tectonic').exists() else 'not found'}")
+/home/z/my-project/skills/pdf/scripts/pdf.py:2677:# --- Step 1: superscripts/subscripts -> <super>/<sub> ---
+/home/z/my-project/skills/TTS/SKILL.md:17:**Reference Scripts**: Example test scripts are available in the `{Skill Location}/scripts/` directory for quick testing and reference. See `{Skill Location}/scripts/tts.ts` for a working example.
+/home/z/my-project/skills/resume-builder/SKILL.md:69:python scripts/ats_check.py --resume <resume.md> \
+/home/z/my-project/skills/study-buddy/SKILL.md:156:2. 调用 `pdf` skill 把 HTML 转成 PDF（命令：`python3 "$PDF_SKILL_DIR/scripts/pdf.py" convert.html <报告.html> --output <报告.pdf>`）
+/home/z/my-project/skills/aminer-academic-search/SKILL.md:42:python3 "{baseDir}/scripts/aminer.py" <ACTION> [--flag value …]
+/home/z/my-project/skills/aminer-academic-search/SKILL.md:49:Run `python3 scripts/aminer.py --help` to list actions, or
+/home/z/my-project/skills/aminer-academic-search/SKILL.md:50:`python3 scripts/aminer.py <ACTION> --help` for per-action flags.
+/home/z/my-project/skills/aminer-academic-search/SKILL.md:56:python3 scripts/aminer.py paper_search --title "Attention is all you need"
+/home/z/my-project/skills/aminer-academic-search/SKILL.md:59:python3 scripts/aminer.py person_search --name "Jie Tang" --org "Tsinghua"
+/home/z/my-project/skills/aminer-academic-search/SKILL.md:62:python3 scripts/aminer.py paper_detail --id 57a4e91aac44365e35c98a1e
+/home/z/my-project/skills/aminer-academic-search/SKILL.md:65:python3 scripts/aminer.py paper_qa_search --query "retrieval-augmented generation" --size 5
+/home/z/my-project/skills/aminer-academic-search/SKILL.md:68:python3 scripts/aminer.py venue_paper_relation --id "53e9ba63b7602d9702f08c5d" --year 2024 --limit 10
+/home/z/my-project/skills/image-understand/SKILL.md:17:**Reference Scripts**: Example test scripts are available in the `{Skill Location}/scripts/` directory for quick testing and reference. See `{Skill Location}/scripts/image-understand.ts` for a working example.
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:97:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:112:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:127:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:142:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:157:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:172:python skills/generate-image/scripts/generate_image.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:203:python skills/generate-image/scripts/generate_image.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:225:python skills/generate-image/scripts/generate_image.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:253:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:277:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:306:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:335:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:361:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:384:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:417:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:446:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:476:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:513:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:543:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:575:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:607:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:640:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:669:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:696:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:726:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:754:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:788:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:822:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:848:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:881:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:909:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:940:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:968:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:1001:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:1030:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:1043:python skills/market-research-reports/scripts/generate_market_visuals.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:1048:python skills/market-research-reports/scripts/generate_market_visuals.py \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:1054:python skills/market-research-reports/scripts/generate_market_visuals.py \
+/home/z/my-project/skills/market-research-reports/SKILL.md:61:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/SKILL.md:66:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/SKILL.md:79:python skills/generate-image/scripts/generate_image.py \
+/home/z/my-project/skills/market-research-reports/SKILL.md:456:python skills/research-lookup/scripts/research_lookup.py \
+/home/z/my-project/skills/market-research-reports/SKILL.md:460:python skills/research-lookup/scripts/research_lookup.py \
+/home/z/my-project/skills/market-research-reports/SKILL.md:464:python skills/research-lookup/scripts/research_lookup.py \
+/home/z/my-project/skills/market-research-reports/SKILL.md:468:python skills/research-lookup/scripts/research_lookup.py \
+/home/z/my-project/skills/market-research-reports/SKILL.md:504:python skills/market-research-reports/scripts/generate_market_visuals.py \
+/home/z/my-project/skills/market-research-reports/SKILL.md:513:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/SKILL.md:518:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/SKILL.md:523:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/SKILL.md:528:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/SKILL.md:533:python skills/scientific-schematics/scripts/generate_schematic.py \
+/home/z/my-project/skills/market-research-reports/SKILL.md:538:python skills/generate-image/scripts/generate_image.py \
+/home/z/my-project/skills/market-research-reports/SKILL.md:876:- **`scripts/generate_market_visuals.py`**: Batch generate all report visuals
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:47:% python skills/generate-image/scripts/generate_image.py "Professional executive summary infographic for [MARKET] market research report, showing key metrics in modern data visualization style, blue and green color scheme, clean minimalist design" --output figures/cover_image.png
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:103:% python skills/scientific-schematics/scripts/generate_schematic.py "Executive summary infographic showing 4 key metrics: Market Size $XX.XB (2024), CAGR XX.X%, Top 3 Players, and Key Trend. Use blue boxes with white text, professional layout" -o figures/exec_summary_infographic.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:198:% python skills/scientific-schematics/scripts/generate_schematic.py "Industry ecosystem diagram showing value chain from [Raw Materials/Inputs] on left through [Manufacturing/Processing] through [Distribution] to [End Users] on right. Include key players at each stage. Use blue boxes connected by arrows" -o figures/industry_ecosystem.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:235:% python skills/scientific-schematics/scripts/generate_schematic.py "Market structure diagram showing industry layers: [Core Market] in center, surrounded by [Adjacent Markets], with [Enabling Technologies] as foundation and [Regulatory Framework] as overlay. Use concentric rectangles" -o figures/market_structure.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:272:% python skills/scientific-schematics/scripts/generate_schematic.py "Bar chart showing market growth from 2020 to 2034. Historical bars (2020-2024) in dark blue, projected bars (2025-2034) in light blue. Y-axis in billions USD, X-axis showing years. Include CAGR label. Title: [MARKET] Market Growth Trajectory" -o figures/market_growth_trajectory.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:327:% python skills/scientific-schematics/scripts/generate_schematic.py "TAM SAM SOM concentric circle diagram. Outer circle: TAM $XXB (Total Addressable Market). Middle circle: SAM $XXB (Serviceable Addressable Market). Inner circle: SOM $XXB (Serviceable Obtainable Market). Labels with arrows pointing to each. Professional blue color scheme" -o figures/tam_sam_som.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:385:% python skills/scientific-schematics/scripts/generate_schematic.py "Pie chart or treemap showing regional market breakdown. North America XX%, Europe XX%, Asia-Pacific XX%, Latin America XX%, Middle East & Africa XX%. Use distinct colors for each region. Include both percentage and dollar values" -o figures/regional_breakdown.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:428:% python skills/scientific-schematics/scripts/generate_schematic.py "Horizontal bar chart comparing segment growth rates. Segments listed on Y-axis, CAGR percentage on X-axis. Bars colored from green (highest growth) to blue (lowest growth). Include data labels on each bar" -o figures/segment_growth.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:453:% python skills/scientific-schematics/scripts/generate_schematic.py "2x2 matrix showing market drivers. X-axis: Impact (Low to High). Y-axis: Likelihood (Low to High). Plot 8-10 drivers as circles. Upper-right quadrant labeled 'Critical Drivers', lower-right 'Watch Carefully', upper-left 'Monitor', lower-left 'Lower Priority'. Professional blue and green colors" -o figures/driver_impact_matrix.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:484:% python skills/scientific-schematics/scripts/generate_schematic.py "PESTLE analysis diagram with center hexagon labeled 'Market' surrounded by 6 hexagons: Political (red), Economic (blue), Social (green), Technological (orange), Legal (purple), Environmental (teal). Each outer hexagon contains 2-3 bullet points of key factors" -o figures/pestle_analysis.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:539:% python skills/scientific-schematics/scripts/generate_schematic.py "Horizontal timeline showing emerging trends from 2024 to 2030. Mark 6-8 trends at different points on timeline with icons and labels. Use different colors for Technology trends (blue), Market trends (green), and Regulatory trends (orange). Include brief descriptions below each trend" -o figures/trends_timeline.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:586:% python skills/scientific-schematics/scripts/generate_schematic.py "Porter's Five Forces diagram. Center box labeled 'Competitive Rivalry: [HIGH/MEDIUM/LOW]'. Four boxes around it connected by arrows: 'Threat of New Entrants: [RATING]' (top), 'Bargaining Power of Suppliers: [RATING]' (left), 'Bargaining Power of Buyers: [RATING]' (right), 'Threat of Substitutes: [RATING]' (bottom). Color code by rating: High=red, Medium=orange, Low=green" -o figures/porters_five_forces.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:625:% python skills/scientific-schematics/scripts/generate_schematic.py "Pie chart showing market share of top 10 companies. Company A XX%, Company B XX%, Company C XX%, [etc.], Others XX%. Use distinct colors for each company. Include legend with company names and percentages" -o figures/market_share.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:661:% python skills/scientific-schematics/scripts/generate_schematic.py "2x2 competitive positioning matrix. X-axis: 'Market Focus' from Niche (left) to Broad (right). Y-axis: 'Solution Approach' from Product (bottom) to Platform (top). Plot 8-10 companies as labeled circles of varying sizes (representing market share). Include quadrant labels" -o figures/competitive_positioning.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:675:% python skills/scientific-schematics/scripts/generate_schematic.py "Strategic group map with circles representing different strategic groups. X-axis: Geographic Scope (Regional to Global). Y-axis: Product Breadth (Narrow to Broad). Each circle contains multiple company names and is sized by collective market share. 4-5 distinct groups" -o figures/strategic_groups.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:713:% python skills/scientific-schematics/scripts/generate_schematic.py "Treemap or pie chart showing customer segments. Segment A XX% (large enterprises), Segment B XX% (mid-market), Segment C XX% (SMB), Segment D XX% (other). Size represents market share. Use distinct colors" -o figures/customer_segments.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:758:% python skills/scientific-schematics/scripts/generate_schematic.py "2x2 segment attractiveness matrix. X-axis: Segment Size (Small to Large). Y-axis: Growth Rate (Low to High). Plot customer segments as circles. Upper-right: 'Priority', Upper-left: 'Invest to Grow', Lower-right: 'Harvest', Lower-left: 'Deprioritize'. Include segment labels" -o figures/segment_attractiveness.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:788:% python skills/scientific-schematics/scripts/generate_schematic.py "Customer journey diagram showing 5 stages: Awareness → Consideration → Decision → Implementation → Advocacy. Each stage shows key activities, pain points, and touchpoints. Use horizontal flow with icons for each stage" -o figures/customer_journey.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:809:% python skills/scientific-schematics/scripts/generate_schematic.py "Technology roadmap timeline from 2024 to 2030. Show 3 parallel tracks: Core Technology (blue), Emerging Technology (green), and Enabling Technology (orange). Mark key milestones and technology introductions on each track. Use horizontal timeline format" -o figures/technology_roadmap.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:843:% python skills/scientific-schematics/scripts/generate_schematic.py "Innovation adoption curve or hype cycle diagram showing where key technologies sit. From left to right: Innovation Trigger, Peak of Inflated Expectations, Trough of Disillusionment, Slope of Enlightenment, Plateau of Productivity. Plot 6-8 technologies at different points" -o figures/innovation_curve.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:883:% python skills/scientific-schematics/scripts/generate_schematic.py "Regulatory timeline from 2020 to 2028. Show key regulatory milestones as markers on horizontal timeline. Past events in dark blue, future/upcoming in light blue. Include regulation names and effective dates. Mark current date with vertical line" -o figures/regulatory_timeline.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:930:% python skills/scientific-schematics/scripts/generate_schematic.py "Risk heatmap matrix. X-axis: Impact (Low to Critical). Y-axis: Probability (Unlikely to Very Likely). Plot 10-12 risks as labeled circles. Color code: Green (low risk), Yellow (medium), Orange (high), Red (critical). Include risk labels" -o figures/risk_heatmap.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:978:% python skills/scientific-schematics/scripts/generate_schematic.py "Risk mitigation matrix showing risks in left column and corresponding mitigation strategies in right column. Connect risks to mitigations with arrows. Color code by risk severity. Include both prevention and response strategies" -o figures/risk_mitigation.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:1006:% python skills/scientific-schematics/scripts/generate_schematic.py "2x2 opportunity matrix. X-axis: Market Attractiveness (Low to High). Y-axis: Ability to Win (Low to High). Plot 6-8 opportunities as labeled circles of varying sizes. Upper-right: 'Pursue Aggressively', Upper-left: 'Selective Investment', Lower-right: 'Build Capabilities', Lower-left: 'Avoid'" -o figures/opportunity_matrix.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:1049:% python skills/scientific-schematics/scripts/generate_schematic.py "Priority matrix showing recommendations. X-axis: Effort/Investment (Low to High). Y-axis: Impact/Value (Low to High). Plot 6-8 recommendations. Upper-left: 'Quick Wins', Upper-right: 'Major Projects', Lower-left: 'Fill-ins', Lower-right: 'Thankless Tasks'. Label each recommendation" -o figures/recommendation_priority.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:1098:% python skills/scientific-schematics/scripts/generate_schematic.py "Gantt chart style implementation timeline showing 4 phases over 24 months. Phase 1: Foundation (months 1-6), Phase 2: Build (months 4-12), Phase 3: Scale (months 10-18), Phase 4: Optimize (months 16-24). Show overlapping phases with key milestones marked. Use different colors for each phase" -o figures/implementation_timeline.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:1122:% python skills/scientific-schematics/scripts/generate_schematic.py "Milestone tracker showing 8-10 key milestones on a horizontal timeline. Each milestone has a date, name, and status indicator (completed=green checkmark, in-progress=yellow circle, upcoming=gray circle). Group by phase" -o figures/milestone_tracker.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:1193:% python skills/scientific-schematics/scripts/generate_schematic.py "Financial projections chart showing revenue growth over 5 years. Bar chart for revenue with line overlay for growth rate. Three scenarios: Conservative (gray bars), Base Case (blue bars), Optimistic (green bars). Y-axis dual: Revenue ($M) and Growth (%). Include data labels" -o figures/financial_projections.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:1222:% python skills/scientific-schematics/scripts/generate_schematic.py "Scenario comparison chart showing 3 scenarios (Conservative, Base, Optimistic) across key metrics. Use grouped bar chart with metrics on X-axis (Revenue Y5, EBITDA Y5, Market Share, ROI) and values on Y-axis. Color code by scenario" -o figures/scenario_analysis.png --doc-type report
+/home/z/my-project/skills/dream-interpreter/scripts/example.py:9:- pdf/scripts/fill_fillable_fields.py - Fills PDF form fields
+/home/z/my-project/skills/dream-interpreter/scripts/example.py:10:- pdf/scripts/convert_pdf_to_images.py - Converts PDF pages to images
+/home/z/my-project/skills/pptx/SKILL.md:33:python ooxml/scripts/unpack.py <office_file> <output_dir>
+/home/z/my-project/skills/pptx/SKILL.md:36:**Note**: `unpack.py` is at `skills/pptx/ooxml/scripts/unpack.py` relative to the project root. If not found, run `find . -name "unpack.py"` to locate it.
+/home/z/my-project/skills/pptx/SKILL.md:82:      python /home/z/my-project/skills/ppt/scripts/extract_html_style.py \
+/home/z/my-project/skills/jd-resume-tailor/SKILL.md:45:python scripts/parse_jd.py --jd-file <jd.txt> --out jd_parsed.json
+/home/z/my-project/skills/jd-resume-tailor/SKILL.md:72:python scripts/jd_gap.py --jd jd_parsed.json --resume resume.txt --out gap.md
+/home/z/my-project/skills/docx/references/ooxml.md:17:find /mnt/skills -name "document.py" -path "*/docx/scripts/*" 2>/dev/null | head -1
+/home/z/my-project/skills/docx/references/ooxml.md:18:# Skill root = parent of scripts/
+/home/z/my-project/skills/docx/SKILL.md:38:All CLI tools live in `scripts/` relative to this skill's directory. Before calling any script, resolve the absolute path once:
+/home/z/my-project/skills/docx/SKILL.md:57:**⚠️ NEVER use bare `python3 scripts/...`** — it only works if cwd happens to be the skill directory. Always use the absolute `$DOCX_SCRIPTS` path.
+/home/z/my-project/skills/docx/scenes/exam.md:580:Subscripts/superscripts must be correct: H₂O, CO₂, Fe₂O₃, Ca(OH)₂
+/home/z/my-project/skills/quiz-mastery/README.md:21:├── scripts/
+/home/z/my-project/skills/quiz-mastery/README.md:38:python3 scripts/generate_from_material.py <file_path> <document_id>
+/home/z/my-project/skills/quiz-mastery/README.md:46:python3 scripts/import_quiz.py <file_path> <document_id> <user_id>
+
+[Showing results with pagination = limit: 250]

@@ -3,19 +3,20 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
+import type { Variants } from 'framer-motion'
 import { api } from '@/lib/api'
 import { categoryIcon } from '@/lib/icons'
 import { useNav } from '@/store/nav'
-import { formatPrice, relativeTime, type CategoryT } from '@/lib/types'
+import { formatPrice, relativeTime } from '@/lib/types'
 import { cn } from '@/lib/utils'
 
-const stagger = {
+const stagger: Variants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.04 } },
 }
-const item = {
+const item: Variants = {
   hidden: { opacity: 0, y: 6 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] as const } },
 }
 
 export function HomeView() {

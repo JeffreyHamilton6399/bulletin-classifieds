@@ -1,7 +1,7 @@
 'use client'
 
 import { AnimatePresence, motion } from 'framer-motion'
-import { useNav } from '@/store/nav'
+import { useNav, type View } from '@/store/nav'
 import { Header } from '@/components/marketplace/Header'
 import { CategoryNav } from '@/components/marketplace/CategoryNav'
 import { HomeView } from '@/components/marketplace/HomeView'
@@ -50,7 +50,7 @@ export default function Home() {
   )
 }
 
-function viewKey(view: ReturnType<typeof useNav>['view']): string {
+function viewKey(view: View): string {
   switch (view.name) {
     case 'home': return 'home'
     case 'browse': return `browse-${view.category || ''}-${view.q || ''}`
@@ -59,5 +59,6 @@ function viewKey(view: ReturnType<typeof useNav>['view']): string {
     case 'account': return 'account'
     case 'profile': return `profile-${view.userId}`
     case 'settings': return 'settings'
+    default: return 'unknown'
   }
 }

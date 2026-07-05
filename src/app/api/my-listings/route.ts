@@ -1,17 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
-import { ensureBooted } from '@/lib/ensure-seeded'
+import { withDbErrorHandler } from '@/lib/api-error'
 
 export const dynamic = 'force-dynamic'
 
-/**
- * Look up listings by their secret management tokens. A poster's tokens are
- * saved in their browser (localStorage) when they post — so only the device
- * that created the listing (or anyone explicitly given a manage link) can
- * see and manage it. No email lookup, no password, no enumeration possible.
- */
-export async function POST(req: NextRequest) {
-  await ensureBooted()
+export const POST = withDbErrorHandler(async (req: NextRequest) => {
   let body: any
   try {
     body = await req.json()
@@ -20,7 +13,6 @@ export async function POST(req: NextRequest) {
   }
   const tokens: string[] = Array.isArray(body?.tokens) ? body.tokens : []
   if (tokens.length === 0) return NextResponse.json([])
-  // cap to a sane number
   const safe = tokens.filter((t) => typeof t === 'string').slice(0, 200)
 
   const listings = await db.listing.findMany({
@@ -52,4 +44,4 @@ export async function POST(req: NextRequest) {
     _thumb: l.images[0]?.url ?? null,
   }))
   return NextResponse.json(out)
-}
+})

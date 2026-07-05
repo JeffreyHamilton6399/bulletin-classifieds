@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { hashPassword } from '@/lib/auth'
-import { ensureBooted } from '@/lib/ensure-seeded'
+import { withDbErrorHandler } from '@/lib/api-error'
 
 export const dynamic = 'force-dynamic'
 
-export async function POST(req: NextRequest) {
-  await ensureBooted()
+export const POST = withDbErrorHandler(async (req: NextRequest) => {
   let body: any
   try {
     body = await req.json()
@@ -36,7 +35,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'An account with this email already exists' }, { status: 409 })
   }
 
-  // rate limit: max 5 signups per 10 min (rough, per-IP would be better)
   const recent = await db.user.count({
     where: { createdAt: { gt: new Date(Date.now() - 10 * 60 * 1000) } },
   })
@@ -56,4 +54,4 @@ export async function POST(req: NextRequest) {
   })
 
   return NextResponse.json(user, { status: 201 })
-}
+})

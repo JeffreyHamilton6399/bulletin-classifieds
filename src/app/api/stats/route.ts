@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
-import { ensureBooted } from '@/lib/ensure-seeded'
 import { withDbErrorHandler } from '@/lib/api-error'
 
 export const dynamic = 'force-dynamic'
 
 export const GET = withDbErrorHandler(async (req: NextRequest) => {
-  await ensureBooted()
   const regionId = new URL(req.url).searchParams.get('regionId') || undefined
   const where = regionId
     ? { regionId, status: 'ACTIVE' as const, expiresAt: { gt: new Date() } }
