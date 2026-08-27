@@ -21,7 +21,7 @@ Create an account for a public profile, or post anonymously — both work.
 
 - **Accounts** — sign up with email + password (scrypt-hashed) for a public profile with listings that follow you across devices
 - **Anonymous posting** — post with just an email if you prefer; each listing gets a management token
-- **Regions** — 8 US cities; listings scoped to your selection
+- **Regions** — 30 US metros; listings scoped to your selection
 - **Categories & subcategories** — 7 groups with hover-mega-menu navigation
 - **Post a listing** — drag-to-reorder image upload (up to 12), price labels (obo/firm/free/trade), 30-day auto-expiry with renew
 - **Browse & search** — dense list + custom map view, filters (price, category, keyword, has-image, sort)
